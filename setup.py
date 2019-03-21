@@ -11,7 +11,7 @@ package_dir = {p: path.join("stubs", p) for p in packages}
 
 setup(
     name="pythonista-stubs",
-    version="0.0.1",
+    version="0.0.2",
     description="A collection of Pythonista stub files",
     long_description=long_description,
     long_description_content_type="text/markdown",
