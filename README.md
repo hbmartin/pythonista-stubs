@@ -1,7 +1,6 @@
 # Pythonista Stubs
 
 ![PyPI](https://img.shields.io/pypi/v/pythonista-stubs.svg)
-![PyPI - License](https://img.shields.io/pypi/l/pythonista-stubs.svg)
 ![GitHub issues](https://img.shields.io/github/issues-raw/hbmartin/pythonista-stubs.svg)
 ![Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 [![Build Status](https://travis-ci.com/hbmartin/pythonista-stubs.svg?branch=master)](https://travis-ci.com/hbmartin/pythonista-stubs)
