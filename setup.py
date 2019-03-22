@@ -7,7 +7,9 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 packages = ["appex", "clipboard", "console", "reminders"]
-package_dir = {p: path.join("stubs", p) for p in packages}
+packages_stubs = [p + "-stubs" for p in packages]
+package_dir = {p + "-stubs": path.join("stubs", p) for p in packages}
+package_data = {ps: ["__init__.pyi"] for ps in packages_stubs}
 
 setup(
     name="pythonista-stubs",
@@ -17,8 +19,8 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/hbmartin/pythonista-stubs",
     package_dir=package_dir,
-    packages=packages,
-    package_data={"": ["*.pyi", "py.typed"]},
+    packages=packages_stubs,
+    package_data=package_data,
     install_requires=["typing_extensions", "mypy", "Pillow"],
     classifiers=[
         "Development Status :: 3 - Alpha",
