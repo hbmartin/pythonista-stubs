@@ -6,7 +6,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-packages = ["appex", "clipboard", "console", "reminders"]
+packages = ["appex", "clipboard", "console", "reminders", "speech"]
 packages_stubs = [p + "-stubs" for p in packages]
 package_dir = {p + "-stubs": path.join("stubs", p) for p in packages}
 package_data = {ps: ["__init__.pyi"] for ps in packages_stubs}
