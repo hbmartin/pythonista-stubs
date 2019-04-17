@@ -6,14 +6,14 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-packages = ["appex", "clipboard", "console", "reminders", "sound"]
+packages = ["appex", "clipboard", "console", "reminders", "sound", "speech"]
 packages_stubs = [p + "-stubs" for p in packages]
 package_dir = {p + "-stubs": path.join("stubs", p) for p in packages}
 package_data = {ps: ["__init__.pyi"] for ps in packages_stubs}
 
 setup(
     name="pythonista-stubs",
-    version="0.0.2",
+    version="0.0.3",
     description="A collection of Pythonista stub files",
     long_description=long_description,
     long_description_content_type="text/markdown",
