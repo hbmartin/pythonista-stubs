@@ -13,7 +13,7 @@ package_data = {ps: ["__init__.pyi"] for ps in packages_stubs}
 
 setup(
     name="pythonista-stubs",
-    version="0.0.2",
+    version="0.0.3",
     description="A collection of Pythonista stub files",
     long_description=long_description,
     long_description_content_type="text/markdown",
