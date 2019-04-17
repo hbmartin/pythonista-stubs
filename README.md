@@ -49,8 +49,8 @@ See also: [mypy integrations](https://github.com/python/mypy#ide--linter-integra
 | photos      | ✘      |
 | reminders   | ✔      |
 | scene       | ✘      |
-| sound       | ✘      |
-| speech      | ✘      |
+| sound       | ✔      |
+| speech      | ✔      |
 | twitter     | ✘      |
 | ui          | ✘      |
 
