@@ -39,7 +39,7 @@ See also: [mypy integrations](https://github.com/python/mypy#ide--linter-integra
 | console     | ✔      |
 | dialogs     | ✘      |
 | contacts    | ✘      |
-| editor      | ✘      |
+| editor      | ✔      |
 | keychain    | ✘      |
 | linguistictagger | ✘      |
 | location    | ✘      |
