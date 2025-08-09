@@ -10,5 +10,4 @@ class View:
             Union[str, Tuple[int, int, int], Tuple[int, int, int, int], float]
         ] = None,
         name: Optional[str] = None,
-    ) -> None:
-        ...
+    ) -> None: ...

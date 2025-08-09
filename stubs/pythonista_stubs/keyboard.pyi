@@ -1,0 +1,82 @@
+"""
+This is a stub file for the `keyboard` module, providing type hints for its
+functions and their parameters, to be used for static analysis and autocompletion.
+"""
+
+from typing import List, Literal, Optional, Tuple
+
+# These are imported from the `ui` module, which is part of Pythonista.
+class View:
+    def __init__(self, *args, **kwargs): ...
+    def add_subview(self, view: "View") -> None: ...
+    def remove_subview(self, view: "View") -> None: ...
+    def present(self, style: str = "sheet", animated: bool = True) -> None: ...
+
+# -----------------------------------------------------------------------------
+# Functions
+# -----------------------------------------------------------------------------
+_Appearance = Literal["dark", "light"]
+_Mode = Literal["current", "minimized", "expanded"]
+
+def backspace(times: int = 1) -> None:
+    """Delete backwards in the current document.
+    Args:
+        times (int, optional): The number of characters to delete. Defaults to 1.
+    """
+    ...
+
+def get_appearance() -> _Appearance:
+    """Return the current appearance of the keyboard ('dark' or 'light')."""
+    ...
+
+def get_document_id() -> str:
+    """Return a unique identifier (UUID) for the current document."""
+    ...
+
+def get_input_context() -> Tuple[str, str]:
+    """Return a 2-tuple with the text immediately before and after the cursor."""
+    ...
+
+def get_selected_text() -> str:
+    """Return the currently selected text or an empty string."""
+    ...
+
+def get_text_replacements() -> Optional[List[Tuple[str, str]]]:
+    """Return a list of text replacements.
+    Returns:
+        Optional[List[Tuple[str, str]]]: A list of (phrase, shortcut) tuples,
+        or None if not running in the keyboard.
+    """
+    ...
+
+def has_full_access() -> bool:
+    """Return True if 'Full Access' is enabled for the keyboard."""
+    ...
+
+def has_text() -> bool:
+    """Return True if the document being edited contains any text."""
+    ...
+
+def insert_text(text: str) -> None:
+    """Insert text in the current document."""
+    ...
+
+def is_keyboard() -> bool:
+    """Return True if the script is running in the custom Pythonista keyboard."""
+    ...
+
+def move_cursor(offset: int) -> None:
+    """Move the cursor by a specified offset."""
+    ...
+
+def play_input_click() -> None:
+    """Play an input click sound."""
+    ...
+
+def set_view(view: Optional[View] = None, mode: _Mode = "current") -> None:
+    """Sets a custom ui.View as the keyboard's UI.
+    Args:
+        view (ui.View, optional): The view to display. Pass None to close.
+        mode (str, optional): The presentation mode ('minimized', 'expanded', or 'current').
+    """
+    ...
