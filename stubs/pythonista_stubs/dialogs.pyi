@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple, Union, Literal
 
 # These are imported from the `console` module for convenience.
 # We'll alias the types for clarity.
-from . import console as _console
+from .console import _HudIcon
 
 # These are imported from the `ui` module, which is part of Pythonista.
 # We'll provide a minimal stub for the types used.
@@ -21,25 +21,50 @@ class TextField:
 class ListDataSource:
     items: List[Dict[str, Any]] = ...
 
-def alert(*args, **kwargs) -> int:
+def alert(
+    title: str,
+    message: str = "",
+    button1: str = "OK",
+    button2: Optional[str] = None,
+    button3: Optional[str] = None,
+    hide_cancel_button: bool = False,
+) -> int:
     """See console.alert()"""
-    return _console.alert(*args, **kwargs)
+    ...
 
-def input_alert(*args, **kwargs) -> str:
+def input_alert(
+    title: str,
+    message: str = "",
+    input: str = "",
+    ok_button_title: str = "OK",
+    hide_cancel_button: bool = False,
+) -> str:
     """See console.input_alert()"""
-    return _console.input_alert(*args, **kwargs)
+    ...
 
-def login_alert(*args, **kwargs) -> Tuple[str, str]:
+def password_alert(
+    title: str,
+    message: str = "",
+    password: str = "",
+    ok_button_title: str = "OK",
+    hide_cancel_button: bool = False,
+) -> str:
     """See console.login_alert()"""
-    return _console.login_alert(*args, **kwargs)
+    ...
 
-def password_alert(*args, **kwargs) -> str:
+def login_alert(
+    title: str,
+    message: str = "",
+    login: str = "",
+    password: str = "",
+    ok_button_title: str = "OK",
+) -> Tuple[str, str]:
     """See console.password_alert()"""
-    return _console.password_alert(*args, **kwargs)
+    ...
 
-def hud_alert(*args, **kwargs) -> None:
+def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -> None:
     """See console.hud_alert()"""
-    return _console.hud_alert(*args, **kwargs)
+    ...
 
 # -----------------------------------------------------------------------------
 # Dialog Functions

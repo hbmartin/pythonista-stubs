@@ -37,6 +37,14 @@ dynamic = ['version']
 "Bug Reports" = "https://github.com/hbmartin/pythonista-stubs/issues"
 "Source" = "https://github.com/hbmartin/pythonista-stubs"
 
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.17.1",
+    "ruff>=0.12.8",
+]
+
+[tool.setuptools.package-dir]
+"pythonista_stubs" = "stubs"
 
 [tool.setuptools.packages.find]
 where = ["stubs"]
@@ -45,10 +53,10 @@ include = [
 ]
 
 [tool.setuptools.package-data]
-"*" = [ "**/*" ]  # to include root-places .pyi stubs
+"*" = ["**/*"]  # to include root-places .pyi stubs
 
 [tool.setuptools.dynamic]
-version = {file = "VERSION"}
+version = { file = "VERSION" }
 
 [dependency-groups]
 dev = [

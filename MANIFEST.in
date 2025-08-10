@@ -1,1 +1,2 @@
 include pythonista_stubs/*.pyi
+include VERSION

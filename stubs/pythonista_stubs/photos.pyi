@@ -28,7 +28,20 @@ class Asset:
     def get_ui_image(
         self, size: Optional[Tuple[int, int]] = None, crop: bool = False
     ) -> ui_Image:
-        """Fetch the asset's image data as a ui.Image object."""
+        """
+        Fetch the asset's image data as a ui.Image object.
+
+        Args:
+            size (Optional[Tuple[int, int]]): The desired size of the returned image,
+                specified as a tuple of (width, height). If None, the original
+                image dimensions are used.
+            crop (bool): If True, the image will be cropped to fit the specified
+                size while maintaining its aspect ratio. If False, the image will
+                be resized and may be distorted. Defaults to False.
+
+        Returns:
+            ui_Image: The asset's image data as a ui.Image object.
+        """
         ...
 
     def edit_content(self, jpeg_path: str) -> None:

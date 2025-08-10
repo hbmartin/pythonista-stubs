@@ -73,6 +73,12 @@ dependencies = [
     { name = "typing-extensions" },
 ]
 
+[package.optional-dependencies]
+dev = [
+    { name = "mypy" },
+    { name = "ruff" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "mypy" },
@@ -81,9 +87,12 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.17.1" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.12.8" },
     { name = "types-pillow", specifier = ">=10.2.0.20240822" },
     { name = "typing-extensions", specifier = ">=4.14.1" },
 ]
+provides-extras = ["dev"]
 
 [package.metadata.requires-dev]
 dev = [

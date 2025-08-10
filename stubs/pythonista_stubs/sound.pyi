@@ -3,7 +3,8 @@ This is a stub file for the `sound` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Callable, Optional, Tuple
+from typing import Callable, Optional, Tuple, Mapping
+
 
 # -----------------------------------------------------------------------------
 # Functions
@@ -131,7 +132,7 @@ class Recorder:
     """The current duration of the active recording."""
     recording: bool
     """Whether the recorder is currently recording."""
-    meters: dict
+    meters: Mapping[str, Tuple[float, float]]
     """The current average and peak power (read-only).
     Example: {'average': (-35.3, -30.1), 'peak': (-5.2, -8.2)}
     """
