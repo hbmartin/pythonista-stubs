@@ -96,7 +96,7 @@ def open_file(name: str, new_tab: bool = False) -> None:
     ...
 
 def apply_ui_theme(ui_view: View, theme_name: Optional[str] = None) -> None:
-    """Styles a ui.View (and its descendents) with the given UI theme.
+    """Styles a ui.View (and its descendants) with the given UI theme.
 
     Args:
         ui_view (ui.View): The view to be styled.

@@ -5,7 +5,6 @@ functions and their parameters, to be used for static analysis and autocompletio
 
 from typing import Callable, Optional, Tuple, Mapping
 
-
 # -----------------------------------------------------------------------------
 # Functions
 # -----------------------------------------------------------------------------

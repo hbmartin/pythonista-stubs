@@ -54,7 +54,7 @@ class Characteristic:
     properties: int
     value: Optional[bytes]
     uuid: str  # hex
-    notifying: bool  # of bool
+    notifying: bool
 
 class Service:
     characteristics: List[Characteristic]
@@ -70,7 +70,9 @@ class Peripheral:
 
     def discover_services(self) -> None: ...
     def discover_characteristics(self, service: Service) -> None: ...
-    def set_notify_value(self, characteristic: Characteristic, flag: bool = True) -> None: ...
+    def set_notify_value(
+        self, characteristic: Characteristic, flag: bool = True
+    ) -> None: ...
     def write_characteristic_value(
         self, characteristic, data, with_response
     ) -> None: ...

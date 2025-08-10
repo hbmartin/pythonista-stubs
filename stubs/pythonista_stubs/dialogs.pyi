@@ -49,7 +49,7 @@ def password_alert(
     ok_button_title: str = "OK",
     hide_cancel_button: bool = False,
 ) -> str:
-    """See console.login_alert()"""
+    """See console.password_alert()"""
     ...
 
 def login_alert(
@@ -59,7 +59,7 @@ def login_alert(
     password: str = "",
     ok_button_title: str = "OK",
 ) -> Tuple[str, str]:
-    """See console.password_alert()"""
+    """See console.login_alert()"""
     ...
 
 def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -> None:
