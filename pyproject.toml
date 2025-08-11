@@ -70,4 +70,7 @@ indent-width = 4
 target-version = "py311"
 
 lint.select = ["ALL"]
-lint.ignore = ["ANN204", "D205", "D400", "D401", "D404", "D415", "PIE790", "PYI021", "PYI048"]
+lint.ignore = ["A002", "ANN204", "D205", "D400", "D401", "D404", "D415", "PIE790", "PYI021", "PYI048"]
+
+[tool.ruff.lint.per-file-ignores]
+"stubs/pythonista_stubs/objc_util.pyi" = ["ANN401", "D418", "N802"]
