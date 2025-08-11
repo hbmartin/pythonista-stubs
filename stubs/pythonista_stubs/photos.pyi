@@ -1,12 +1,10 @@
-"""
-This is a stub file for the `photos` module, providing type hints for its
+"""This is a stub file for the `photos` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
 import datetime
 import io
-from typing import Optional, Literal, Union
-from collections.abc import Sequence
+from typing import Literal, TypeAlias
 
 from PIL.Image import Image as PILImage
 from ui import Image as UIImage
@@ -26,10 +24,11 @@ class Asset:
         ...
 
     def get_ui_image(
-        self, size: Optional[tuple[int, int]] = None, crop: bool = False
+        self,
+        size: tuple[int, int] | None = None,
+        crop: bool = False,
     ) -> UIImage:
-        """
-        Fetch the asset's image data as a ui.Image object.
+        """Fetch the asset's image data as a ui.Image object.
 
         Args:
             size (Optional[tuple[int, int]]): The desired size of the returned image,
@@ -41,6 +40,7 @@ class Asset:
 
         Returns:
             UIImage: The asset's image data as a ui.Image object.
+
         """
         ...
 
@@ -55,7 +55,6 @@ class Asset:
     def revert(self) -> None:
         """Revert the asset to its original state."""
         ...
-
     local_id: str
     """A unique identifier of this asset (read-only)."""
     pixel_width: int
@@ -64,7 +63,7 @@ class Asset:
     """The height of the asset in pixels (read-only)."""
     media_type: Literal["image", "video"]
     """The asset's media type (read-only)."""
-    media_subtypes: List[str]
+    media_subtypes: list[str]
     """The asset's media subtypes (read-only)."""
     creation_date: datetime.datetime
     """The asset's creation date (read-write)."""
@@ -76,7 +75,7 @@ class Asset:
     """Whether the asset is a favorite (read-write)."""
     duration: float
     """The duration of a video asset in seconds (read-only)."""
-    location: Optional[dict]
+    location: dict | None
     """The geo-location where the media was taken (read-write)."""
     can_edit_content: bool
     """Whether the asset's content can be modified (read-only)."""
@@ -95,15 +94,14 @@ class AssetCollection:
         """Delete the asset collection from the photo library."""
         ...
 
-    def add_assets(self, assets: List[Asset]) -> None:
+    def add_assets(self, assets: list[Asset]) -> None:
         """Add a list of Asset objects to the album."""
         ...
 
-    def remove_assets(self, assets: List[Asset]) -> None:
+    def remove_assets(self, assets: list[Asset]) -> None:
         """Remove a list of Asset objects from the album."""
         ...
-
-    assets: List[Asset]
+    assets: list[Asset]
     """The assets that the collection contains (read-only)."""
     local_id: str
     """A unique identifier of this asset collection (read-only)."""
@@ -129,17 +127,18 @@ class AssetCollection:
 # -----------------------------------------------------------------------------
 # Functions
 # -----------------------------------------------------------------------------
-_MediaType = Literal["image", "video"]
-_CameraType = Literal["rear", "front"]
-_MapType = Literal["standard", "satellite", "hybrid"]
+_MediaType: TypeAlias = Literal["image", "video"]
+_CameraType: TypeAlias = Literal["rear", "front"]
+_MapType: TypeAlias = Literal["standard", "satellite", "hybrid"]
 
-def capture_image(camera: _CameraType = "rear") -> Optional[Image]:
+def capture_image(camera: _CameraType = "rear") -> PILImage | None:
     """Show a standard camera interface and return the captured image."""
     ...
 
 def get_assets(
-    media_type: _MediaType = "image", include_hidden: bool = False
-) -> List[Asset]:
+    media_type: _MediaType = "image",
+    include_hidden: bool = False,
+) -> list[Asset]:
     """Fetch and return a list of all assets in the library."""
     ...
 
@@ -147,15 +146,15 @@ def get_asset_with_local_id(local_id: str) -> Asset:
     """Fetch and return the asset with the given local identifier."""
     ...
 
-def get_albums() -> List[AssetCollection]:
+def get_albums() -> list[AssetCollection]:
     """Return a list of all regular albums in the photo library."""
     ...
 
-def get_smart_albums() -> List[AssetCollection]:
+def get_smart_albums() -> list[AssetCollection]:
     """Return a list of all smart albums in the photo library."""
     ...
 
-def get_moments() -> List[AssetCollection]:
+def get_moments() -> list[AssetCollection]:
     """Return a list of all 'moments' in the photo library."""
     ...
 
@@ -175,11 +174,11 @@ def get_screenshots_album() -> AssetCollection:
     """Return the smart album containing all screenshots."""
     ...
 
-def batch_delete(assets: List[Asset]) -> None:
+def batch_delete(assets: list[Asset]) -> None:
     """Delete multiple assets from the photo library."""
     ...
 
-def batch_revert(assets: List[Asset]) -> None:
+def batch_revert(assets: list[Asset]) -> None:
     """Revert multiple assets to their original state."""
     ...
 
@@ -192,9 +191,9 @@ def create_image_asset(image_path: str) -> Asset:
     ...
 
 def pick_asset(
-    assets: Optional[Union[List[Asset], AssetCollection]] = None,
+    assets: list[Asset] | AssetCollection | None = None,
     title: str = "",
     multi: bool = False,
-) -> Union[Optional[Asset], Optional[List[Asset]]]:
+) -> Asset | None | list[Asset]:
     """Show a dialog with a grid of thumbnails for the given assets."""
     ...

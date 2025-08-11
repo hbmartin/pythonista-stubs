@@ -14,7 +14,7 @@ Stubs for the [Pythonista iOS API](http://omz-software.com/pythonista/docs/ios/)
 ```
 uv add pythonista-stubs
 ```
-You can now develop from your computer editor with proper typing and completinos.
+You can now develop from your computer editor with proper typing and completions.
 
 ## API Coverage
 

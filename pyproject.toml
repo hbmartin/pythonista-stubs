@@ -37,12 +37,6 @@ dynamic = ['version']
 "Bug Reports" = "https://github.com/hbmartin/pythonista-stubs/issues"
 "Source" = "https://github.com/hbmartin/pythonista-stubs"
 
-[project.optional-dependencies]
-dev = [
-    "mypy>=1.17.1",
-    "ruff>=0.12.8",
-]
-
 [tool.setuptools.package-dir]
 "pythonista_stubs" = "stubs"
 
@@ -60,6 +54,7 @@ version = { file = "VERSION" }
 
 [dependency-groups]
 dev = [
+    "black>=25.1.0",
     "mypy>=1.17.1", # as a dev dependency, Pythonista does not support mypy
     "ruff>=0.12.8",
 ]
@@ -75,4 +70,4 @@ indent-width = 4
 target-version = "py311"
 
 lint.select = ["ALL"]
-lint.ignore = ["D205", "D400", "D401", "D404", "D415", "PIE790", "PYI021", "PYI048"]
+lint.ignore = ["ANN204", "D205", "D400", "D401", "D404", "D415", "PIE790", "PYI021", "PYI048"]
