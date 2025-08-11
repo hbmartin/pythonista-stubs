@@ -5,11 +5,11 @@ functions and their parameters, to be used for static analysis and autocompletio
 
 import datetime
 import io
-from typing import List, Optional, Tuple, Literal, Union
+from typing import Optional, Literal, Union
+from collections.abc import Sequence
 
-# These are imported from the `PIL` and `ui` modules.
-class Image: ...
-class ui_Image: ...
+from PIL.Image import Image as PILImage
+from ui import Image as UIImage
 
 # -----------------------------------------------------------------------------
 # Asset Class
@@ -17,7 +17,7 @@ class ui_Image: ...
 class Asset:
     """Represents a single media item in the photo library."""
 
-    def get_image(self, original: bool = False) -> Image:
+    def get_image(self, original: bool = False) -> PILImage:
         """Fetch the asset's image data as a PIL.Image object."""
         ...
 
@@ -26,13 +26,13 @@ class Asset:
         ...
 
     def get_ui_image(
-        self, size: Optional[Tuple[int, int]] = None, crop: bool = False
-    ) -> ui_Image:
+        self, size: Optional[tuple[int, int]] = None, crop: bool = False
+    ) -> UIImage:
         """
         Fetch the asset's image data as a ui.Image object.
 
         Args:
-            size (Optional[Tuple[int, int]]): The desired size of the returned image,
+            size (Optional[tuple[int, int]]): The desired size of the returned image,
                 specified as a tuple of (width, height). If None, the original
                 image dimensions are used.
             crop (bool): If True, the image will be cropped to fit the specified
@@ -40,7 +40,7 @@ class Asset:
                 be resized and may be distorted. Defaults to False.
 
         Returns:
-            ui_Image: The asset's image data as a ui.Image object.
+            UIImage: The asset's image data as a ui.Image object.
         """
         ...
 

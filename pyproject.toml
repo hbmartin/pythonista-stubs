@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pythonista-stubs"
 authors = [
-    { name = "Harold Martin" },
+    { name = "Harold Martin", email = "Harold.Martin@gmail.com" },
     { name = "Dmytro Yaroshenko" }
 ]
 description = "A collection of Pythonista stub files"
@@ -69,8 +69,10 @@ packages = ["stubs"]
 ignore_missing_imports = true
 
 [tool.ruff]
-include = [
-    "pyproject.toml",
-    "stubs/**/*.py",
-    "stubs/**/*.pyi",
-]
+# Same as Black.
+line-length = 88
+indent-width = 4
+target-version = "py311"
+
+lint.select = ["ALL"]
+lint.ignore = ["D205", "D400", "D401", "D404", "D415", "PIE790", "PYI021", "PYI048"]
