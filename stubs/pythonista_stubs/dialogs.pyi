@@ -13,10 +13,6 @@ from PIL.Image import Image as PILImage
 from .console import _HudIcon
 from .ui import Image as UIImage
 
-class TextField:
-    AUTOCAPITALIZE_SENTENCES: int = ...
-    # ... other autocapitalization types
-
 class ListDataSource:
     items: list[dict[str, Any]] = ...
 
@@ -68,10 +64,9 @@ def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -
 # -----------------------------------------------------------------------------
 # Dialog Functions
 # -----------------------------------------------------------------------------
-class StrConvertible(Protocol):
-    def __str__(self) -> str: ...
+class StrConvertible(Protocol): ...
 
-T = TypeVar('T', bound=StrConvertible)
+T = TypeVar("T", bound=StrConvertible)
 
 def list_dialog(
     title: str = "",

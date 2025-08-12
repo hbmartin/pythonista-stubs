@@ -203,10 +203,3 @@ def pick_asset(
     title: str = ...,
     multi: Literal[False] = ...,
 ) -> Asset | None: ...
-def pick_asset(
-    assets: list[Asset] | AssetCollection | None = None,
-    title: str = "",
-    multi: bool = False,
-) -> Asset | None | list[Asset]:
-    """Show a dialog with a grid of thumbnails for the given assets."""
-    ...
