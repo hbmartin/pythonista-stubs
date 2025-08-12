@@ -232,7 +232,7 @@ def open_in(file_path: str) -> str | None:
         file_path (str or Path): The path to the file.
 
     Returns:
-        Optional[str]: The bundle identifier of the selected app, or None
+        str | None: The bundle identifier of the selected app, or None
             if the menu was cancelled or no app can open the file.
 
     """

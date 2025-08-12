@@ -4,7 +4,7 @@ according to [pythonista.cb docs](https://omz-software.com/pythonista/docs/ios/c
 
 from typing import Protocol
 
-from _cb import (  # type: ignore
+from _cb import (  # type: ignore[import-not-found]
     CH_PROP_AUTHENTICATED_SIGNED_WRITES,
     CH_PROP_BROADCAST,
     CH_PROP_EXTENDED_PROPERTIES,

@@ -11,7 +11,7 @@ def get_path() -> str | None:
     """Returns the absolute path of the script that is currently open in the editor.
 
     Returns:
-        Optional[str]: The absolute file path, or None if no script is open.
+        str | None: The absolute file path, or None if no script is open.
 
     """
     ...
@@ -31,7 +31,7 @@ def get_selection() -> tuple[int, int] | None:
     The `start` and `end` values are character indices.
 
     Returns:
-        Optional[Tuple[int, int]]: The start and end indices of the selection,
+        tuple[int, int] | None: The start and end indices of the selection,
             or None if no file is currently open.
 
     """
@@ -41,7 +41,7 @@ def get_line_selection() -> tuple[int, int] | None:
     """Returns the range of all lines that are part of the current selection.
 
     Returns:
-        Optional[Tuple[int, int]]: The start and end indices of the line selection,
+        tuple[int, int] | None: The start and end indices of the line selection,
             or None if no file is currently open.
 
     """
@@ -52,7 +52,7 @@ def set_selection(start: int, end: int | None = None, scroll: bool = False) -> N
 
     Args:
         start (int): The starting character index of the selection.
-        end (Optional[int], optional): The ending character index of the selection.
+        end (int | None, optional): The ending character index of the selection.
             If None, the caret is positioned at `start` with no text selected.
         scroll (bool, optional): If True, scrolls the view to make the selection
             visible. Defaults to False.
@@ -81,9 +81,9 @@ def make_new_file(name: str | None = None, content: str | None = None) -> None:
     automatically appended.
 
     Args:
-        name (Optional[str], optional): The desired name for the new file.
+        name (str | None, optional): The desired name for the new file.
             Defaults to None.
-        content (Optional[str], optional): The initial content of the new file.
+        content (str | None, optional): The initial content of the new file.
             If omitted, an empty file is created. Defaults to None.
 
     """
@@ -107,7 +107,7 @@ def apply_ui_theme(ui_view: View, theme_name: str | None = None) -> None:
 
     Args:
         ui_view (ui.View): The view to be styled.
-        theme_name (Optional[str], optional): The name of the theme. If None,
+        theme_name (str | None, optional): The name of the theme. If None,
             the currently selected theme is used. Defaults to None.
 
     """
@@ -116,7 +116,7 @@ def apply_ui_theme(ui_view: View, theme_name: str | None = None) -> None:
 def present_themed(
     ui_view: View,
     theme_name: str | None = None,
-    **kwargs,
+    **kwargs,  # noqa: ANN003
 ) -> None:
     """Styles a ui.View and presents it.
 
@@ -125,8 +125,13 @@ def present_themed(
 
     Args:
         ui_view (ui.View): The view to be styled and presented.
-        theme_name (Optional[str], optional): The name of the theme. If None,
+        theme_name (str | None, optional): The name of the theme. If None,
             the currently selected theme is used. Defaults to None.
+        **kwargs: Keyword arguments are passed on to ui.View.present(),
+            except for title_bar_color and title_color, which are set
+            automatically based on the theme.
+
+
 
     """
     ...
@@ -150,7 +155,7 @@ def annotate_line(
             the annotation. Defaults to 'warning'.
         expanded (bool, optional): If False, only an icon is shown; tapping
             shows the text. Defaults to True.
-        filename (Optional[str], optional): The path to the file to annotate.
+        filename (str | None, optional): The path to the file to annotate.
             If None, the file currently open in the editor is used.
             Defaults to None.
         scroll (bool, optional): If True, scrolls to the annotated line.
@@ -163,7 +168,7 @@ def clear_annotations(filename: str | None = None) -> None:
     """Removes all annotations that were added via `annotate_line()`.
 
     Args:
-        filename (Optional[str], optional): The path to the file from which to
+        filename (str | None, optional): The path to the file from which to
             clear annotations. If None, the file currently open is used.
             Defaults to None.
 

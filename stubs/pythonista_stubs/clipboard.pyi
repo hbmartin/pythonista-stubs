@@ -2,15 +2,9 @@
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Any, Literal, TypeAlias
+from typing import Literal, TypeAlias
 
-# Assuming 'PIL' is from the Pillow library, which is not part of the standard library
-# and might not be available in all Pythonista environments.
-# We'll use `Any` as a fallback or assume a type alias exists.
-try:
-    from PIL.Image import Image
-except ImportError:
-    Image: Any  # type: ignore[no-redef]
+from PIL.Image import Image
 
 def get() -> str:
     """Returns the clipboard's content as a Unicode string.
@@ -21,7 +15,7 @@ def get() -> str:
     """
     ...
 
-def set(string: str) -> None:
+def set(string: str) -> None:  # noqa: A001
     """Sets the clipboard's content to a new string.
 
     Args:
@@ -41,7 +35,7 @@ def get_image(idx: int = 0) -> Image | None:
         idx (int, optional): The index of the image to retrieve. Defaults to 0.
 
     Returns:
-        Optional[Image]: The image from the clipboard, or None if no image
+        Image | None: The image from the clipboard, or None if no image
             was found at the given index.
 
     """

@@ -24,7 +24,7 @@ def play_effect(
         looping (bool, optional): Whether the effect should loop. Defaults to False.
 
     Returns:
-        Optional[Effect]: An Effect object, or None if too many effects are playing.
+        Effect | None: An Effect object, or None if too many effects are playing.
 
     """
     ...

@@ -37,7 +37,7 @@ from typing import overload
 
 @overload
 def process(data: str) -> str: ...
-@overload  
+@overload
 def process(data: int) -> int: ...
 ```
 

@@ -82,7 +82,7 @@ def get_reminders(
             Defaults to None (all reminders).
 
     Returns:
-        List[Reminder]: A list of Reminder objects.
+        list[Reminder]: A list of Reminder objects.
 
     """
     ...
@@ -102,7 +102,7 @@ def get_calendar(calendar_id: str) -> Calendar | None:
         calendar_id (str): The unique identifier of the calendar.
 
     Returns:
-        Optional[Calendar]: The Calendar object, or None if not found.
+        Calendar | None: The Calendar object, or None if not found.
 
     """
     ...

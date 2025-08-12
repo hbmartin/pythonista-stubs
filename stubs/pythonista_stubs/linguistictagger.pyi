@@ -40,7 +40,7 @@ def tag_string(
         scheme (str): The tagging scheme to use.
 
     Returns:
-        List[Tuple[str, str, Tuple[int, int]]]: A list of (tag, substring, range)
+        list[tuple[str, str, tuple[int, int]]]: A list of (tag, substring, range)
             tuples.
 
     """

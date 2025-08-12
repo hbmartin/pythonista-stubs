@@ -32,9 +32,9 @@ def schedule(
         action_url (str, optional): The URL to launch when the notification is tapped.
         title (str, optional): The title of the notification.
         subtitle (str, optional): The subtitle of the notification.
-        attachments (List[str], optional): A list of file paths to attach.
+        attachments (list[str], optional): A list of file paths to attach.
         trigger (dict, optional): A dictionary for more complex triggers.
-        actions (List[dict], optional): Definitions for custom action buttons.
+        actions (list[dict], optional): Definitions for custom action buttons.
         identifier (str, optional): An optional identifier for the notification.
 
     Returns:

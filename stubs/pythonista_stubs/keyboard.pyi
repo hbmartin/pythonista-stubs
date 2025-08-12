@@ -41,7 +41,7 @@ def get_text_replacements() -> list[tuple[str, str]] | None:
     """Return a list of text replacements.
 
     Returns:
-        Optional[List[Tuple[str, str]]]: A list of (phrase, shortcut) tuples,
+        list[tuple[str, str]] | None: A list of (phrase, shortcut) tuples,
         or None if not running in the keyboard.
 
     """

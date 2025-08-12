@@ -4,7 +4,7 @@ functions and their parameters, to be used for static analysis and autocompletio
 
 import datetime
 from collections.abc import Sequence
-from typing import Any, Literal, Protocol, TypeAlias, TypeVar
+from typing import Any, Literal, Protocol, TypeAlias, TypedDict, TypeVar
 
 from PIL.Image import Image as PILImage
 
@@ -64,15 +64,16 @@ def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -
 # -----------------------------------------------------------------------------
 # Dialog Functions
 # -----------------------------------------------------------------------------
-class StrConvertible(Protocol): ...
+class StrConvertible(Protocol):
+    def __str__(self) -> str: ...  # noqa: PYI029
 
-T = TypeVar("T", bound=StrConvertible)
+_T = TypeVar("_T", bound=StrConvertible)
 
 def list_dialog(
     title: str = "",
-    items: list[T] | None = None,
+    items: list[_T] | None = None,
     multiple: bool = False,
-) -> list[T] | None:
+) -> list[_T] | None:
     """Presents a list of items and returns the one(s) that were selected.
 
     When the dialog is cancelled, None is returned. The `items` list can
@@ -88,7 +89,7 @@ def list_dialog(
             Defaults to False.
 
     Returns:
-        Optional[Union[Any, List[Any]]]: The selected item(s), or None if the
+        Any | list[Any] | None: The selected item(s), or None if the
             dialog was canceled.
 
     """
@@ -115,46 +116,57 @@ def edit_list_dialog(
             Defaults to True.
 
     Returns:
-        Optional[List[Any]]: The modified list of items, or None if the
+        list[Any] | None: The modified list of items, or None if the
             dialog was cancelled.
 
     """
     ...
 
-# Field dictionaries are complex, so we'll type-hint them with a specific type alias.
-_FieldType: TypeAlias = Literal[
-    "switch",
-    "text",
-    "url",
-    "email",
-    "password",
-    "number",
-    "check",
-    "datetime",
-    "date",
-    "time",
-]
-_FieldDict: TypeAlias = dict[str, Any]
-_SectionTuple: TypeAlias = tuple[str, list[_FieldDict], str | None]
+class _BaseFieldDict(TypedDict, total=False):
+    key: str | None
+    title: str | None
+    tint_color: str | None
+    icon: str | UIImage | None
+
+# Optional keys specific to text-like fields
+class TextFieldDict(_BaseFieldDict, total=False):
+    type: Literal["text", "url", "email", "password", "number"]
+    placeholder: str | None
+    autocorrection: bool | None
+    autocapitalization: int | None
+
+# If you want to be more specific about value types for different field types:
+class SwitchFieldDict(_BaseFieldDict, total=False):
+    type: Literal["switch", "check"]
+    value: bool
+
+class DateTimeFieldDict(_BaseFieldDict, total=False):
+    type: Literal["datetime", "date", "time"]
+    value: datetime.datetime
+
+# Union type for all possible field dictionaries
+FormFieldDict: TypeAlias = SwitchFieldDict | TextFieldDict | DateTimeFieldDict
+
+_SectionTuple: TypeAlias = tuple[str, list[_BaseFieldDict], str | None]
 
 def form_dialog(
     title: str = "",
-    fields: list[_FieldDict] | None = None,
+    fields: list[FormFieldDict] | None = None,
     sections: list[_SectionTuple] | None = None,
 ) -> dict[str, Any] | None:
     """Presents a form dialog with customizable data input fields.
 
     Args:
         title (str, optional): The title of the dialog. Defaults to "".
-        fields (List[Dict[str, Any]], optional): A list of field dictionaries for
+        fields (list[FormFieldDict] | None, optional): A list of field dictionaries for
             a single-section form. Use `sections` for multiple sections.
             Defaults to None.
-        sections (List[Tuple[str, List[Dict[str, Any]], Optional[str]]], optional):
+        sections (list[_SectionTuple] | None, optional):
             A list of tuples, where each tuple represents a section.
             Defaults to None.
 
     Returns:
-        Optional[Dict[str, Any]]: A dictionary of values for each field,
+        dict[str, Any] | None: A dictionary of values for each field,
             or None if the dialog was cancelled.
 
     """
@@ -173,17 +185,17 @@ def text_dialog(
     Args:
         title (str, optional): The title of the dialog. Defaults to "".
         text (str, optional): The initial text in the editor. Defaults to "".
-        font (Union[Tuple[str, int], Tuple[str], str], optional):
+        font (tuple[str, int] | tuple[str] | str, optional):
             The font and size. Defaults to ('<system>', 16).
-        autocorrection (Optional[bool], optional): Whether auto-correction
+        autocorrection (bool | None, optional): Whether auto-correction
             should be enabled. Defaults to None.
         autocapitalization (int, optional): The auto-capitalization behavior.
             Defaults to ui.AUTOCAPITALIZE_SENTENCES.
-        spellchecking (Optional[bool], optional): Whether spell checking
+        spellchecking (bool | None, optional): Whether spell checking
             should be enabled. Defaults to None.
 
     Returns:
-        Optional[str]: The edited text, or None if the dialog was cancelled.
+        str | None: The edited text, or None if the dialog was cancelled.
 
     """
     ...
@@ -195,7 +207,7 @@ def date_dialog(title: str = "") -> datetime.datetime | None:
         title (str, optional): The title of the dialog. Defaults to "".
 
     Returns:
-        Optional[datetime.datetime]: A datetime.datetime object with the selected
+        datetime.datetime | None: A datetime.datetime object with the selected
             date, or None if the dialog was cancelled.
 
     """
@@ -208,7 +220,7 @@ def time_dialog(title: str = "") -> datetime.datetime | None:
         title (str, optional): The title of the dialog. Defaults to "".
 
     Returns:
-        Optional[datetime.datetime]: A datetime.datetime object with the selected
+        datetime.datetime | None: A datetime.datetime object with the selected
             time, or None if the dialog was cancelled.
 
     """
@@ -221,7 +233,7 @@ def datetime_dialog(title: str = "") -> datetime.datetime | None:
         title (str, optional): The title of the dialog. Defaults to "".
 
     Returns:
-        Optional[datetime.datetime]: A datetime.datetime object with the selected
+        datetime.datetime | None: A datetime.datetime object with the selected
             date and time, or None if the dialog was cancelled.
 
     """
@@ -234,7 +246,7 @@ def duration_dialog(title: str = "") -> float | None:
         title (str, optional): The title of the dialog. Defaults to "".
 
     Returns:
-        Optional[float]: The selected duration in seconds, or None if the
+        float | None: The selected duration in seconds, or None if the
             dialog was cancelled.
 
     """
@@ -283,7 +295,7 @@ def pick_document(types: list[str] = ["public.data"]) -> str | None:
             file types that should be selectable. Defaults to ['public.data'].
 
     Returns:
-        Optional[str]: The path to the selected temporary file, or None if
+        str | None: The path to the selected temporary file, or None if
             the dialog was cancelled.
 
     """

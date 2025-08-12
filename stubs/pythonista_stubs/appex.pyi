@@ -2,7 +2,7 @@
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Any, Literal, TypeAlias, overload
+from typing import Any, Literal, overload
 
 from PIL.Image import Image as PILImage
 
@@ -50,8 +50,6 @@ def get_attachments(uti: str = "public.data") -> list[Any]:
     """
     ...
 
-_ImageType: TypeAlias = Literal["ui", "pil"]
-
 @overload
 def get_images() -> list[PILImage]: ...
 @overload
@@ -68,7 +66,7 @@ def get_image_data() -> bytes | None:
     """Return raw image data for the first image in the share sheet's input.
 
     Returns:
-        Optional[bytes]: The raw image data as a byte string, or None.
+        bytes | None: The raw image data as a byte string, or None.
 
     """
     ...
@@ -171,7 +169,7 @@ def set_widget_view(view: View | None) -> None:
     """Set the widget's view to a ui.View object.
 
     Args:
-        view (Optional[ui.View]): The view to set, or None to remove the current view.
+        view (ui.View | None): The view to set, or None to remove the current view.
 
     """
     ...

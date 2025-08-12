@@ -115,7 +115,7 @@ class Group:
 # Functions
 # -----------------------------------------------------------------------------
 def get_group(group_id: int) -> Group | None:
-    """Return the Group with the given id."""
+    """Return the Group with the given id, or None if not found."""
     ...
 
 def get_all_groups() -> list[Group]:
@@ -152,7 +152,7 @@ def get_all_people() -> list[Person]:
     ...
 
 def get_person(person_id: int) -> Person | None:
-    """Return the Person with the given id."""
+    """Return the Person with the given id, or None if not found."""
     ...
 
 def save() -> None:
