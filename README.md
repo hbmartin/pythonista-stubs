@@ -6,41 +6,47 @@
 [![CI](https://github.com/hbmartin/pythonista-stubs/actions/workflows/ci.yml/badge.svg)](https://github.com/hbmartin/pythonista-stubs/actions/workflows/ci.yml)
 
 
-
-Stubs for the [Pythonista iOS API](http://omz-software.com/pythonista/docs/ios/). This allows for better error detection and IDE / editor autocomplete.
+Stubs for the [Pythonista iOS API](https://omz-software.com/pythonista/lab/). This allows for better error detection and IDE / editor autocomplete.
 
 ## Installation and Usage
 
-```
+Install using your preferred package manager:
+
+```bash
+# Using uv (recommended)
 uv add pythonista-stubs
+
+# Using pip
+pip install pythonista-stubs
 ```
+
 You can now develop from your computer editor with proper typing and completions.
 
 ## API Coverage
 
-| Module      | Status |
-| ----------- |--------|
-| appex       | ✔      |
-| canvas      | WIP   |
-| cb          | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/7) |
-| clipboard   | ✔      |
-| console     | ✔      |
-| contacts | ✔     |
-| dialogs | ✔     |
-| editor      | ✔      |
-| keychain    | ✔     |
-| linguistictagger | ✔     |
-| location    | ✔     |
-| motion      | ✔     |
-| notification   | ✔     |
-| objc_util   | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/7) |
-| photos      | ✔     |
-| reminders   | ✔      |
-| scene       | [✘](https://github.com/hbmartin/pythonista-stubs/issues/9) |
-| sound       | ✔      |
-| speech      | ✔      |
-| twitter     | ✘      |
-| ui          | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/6) |
+| Module      | Status | Documentation |
+| ----------- |--------|---------------|
+| appex       | ✔      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/appex.html) |
+| canvas      | WIP   | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/canvas.html) |
+| cb          | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/7) | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/cb.html) |
+| clipboard   | ✔      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/clipboard.html) |
+| console     | ✔      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/console.html) |
+| contacts | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/contacts.html) |
+| dialogs | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/dialogs.html) |
+| editor      | ✔      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/editor.html) |
+| keychain    | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/keychain.html) |
+| linguistictagger | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/linguistictagger.html) |
+| location    | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/location.html) |
+| motion      | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/motion.html) |
+| notification   | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/notification.html) |
+| objc_util   | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/7) | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/objc_util.html) |
+| photos      | ✔     | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/photos.html) |
+| reminders   | ✔      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/reminders.html) |
+| scene       | [✘](https://github.com/hbmartin/pythonista-stubs/issues/9) | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/scene.html) |
+| sound       | ✔      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/sound.html) |
+| speech      | ✔      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/speech.html) |
+| twitter     | ✘      | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/twitter.html) |
+| ui          | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/6) | [API Docs](https://omz-software.com/pythonista/docs-3.4/py3/ios/ui.html) |
 
 ## Built With
 
@@ -53,27 +59,21 @@ You can now develop from your computer editor with proper typing and completions
 * [PEP 561  -- Distributing and Packaging Type Information](https://www.python.org/dev/peps/pep-0561/)
 * [PEP 3107 -- Function Annotations](https://www.python.org/dev/peps/pep-3107/)
 
+## Troubleshooting
+
+### Type Checker Not Finding Stubs
+- **VSCode**: Ensure the Python extension is using the correct interpreter where pythonista-stubs is installed
+- **PyCharm**: Check that the stub package appears in your project's external libraries
+- **mypy**: Make sure mypy can find the stubs in your Python path
+
+### Import Errors in IDE
+- Verify pythonista-stubs is installed in the same environment as your project
+- Try restarting your IDE after installation
+- Check that your IDE is using the correct Python interpreter
+
 ## Contributing
 
 Please [file a bug report](https://github.com/hbmartin/pythonista-stubs/issues) for any issues you find. Even more excellent than a good bug report is a fix for a bug, or the implementation of a much-needed stub. We'd love to have your contributions.
-
-### Conventions
-
-* long functions and methods should be split up with one argument per line
-* all function bodies should be empty
-* prefer ``...`` over ``pass``
-* prefer ``...`` on the same line as the class/function signature
-* avoid vertical whitespace between consecutive module-level functions, names, or methods and fields within a single class
-* use a single blank line between top-level class definitions
-* do not use docstrings
-* use variable annotations instead of type comments
-* for arguments with a type and a default, use spaces around the `=`
-* use `float` instead of `Union[int, float]`
-* avoid Union return types: https://github.com/python/mypy/issues/1693
-* imports in stubs are considered private unless they use the form ``from library import name as name``
-* avoid using the `Any` type when possible
-* type variables and aliases for legibility reasons should be prefixed with an underscore to make it obvious to the reader they are not part of the stubbed API.
-* these conventions derived from [typeshed](https://github.com/python/typeshed/blob/master/CONTRIBUTING.md#conventions)
 
 ### Code of Conduct
 
@@ -91,4 +91,4 @@ This is not an official project and is not associated with omz:software
 
 ## License
 
-[Apache License 2.0](LICENSE.txt)
+[Apache License 2.0](LICENSE)
