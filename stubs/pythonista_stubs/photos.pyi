@@ -4,10 +4,11 @@ functions and their parameters, to be used for static analysis and autocompletio
 
 import datetime
 import io
-from typing import Literal, TypeAlias
+from typing import Literal, TypeAlias, overload
 
 from PIL.Image import Image as PILImage
-from ui import Image as UIImage
+
+from .ui import Image as UIImage
 
 # -----------------------------------------------------------------------------
 # Asset Class
@@ -190,6 +191,18 @@ def create_image_asset(image_path: str) -> Asset:
     """Create and return a new image asset from a file."""
     ...
 
+@overload
+def pick_asset(
+    assets: list[Asset] | AssetCollection | None = ...,
+    title: str = ...,
+    multi: Literal[True] = ...,
+) -> list[Asset] | None: ...
+@overload
+def pick_asset(
+    assets: list[Asset] | AssetCollection | None = ...,
+    title: str = ...,
+    multi: Literal[False] = ...,
+) -> Asset | None: ...
 def pick_asset(
     assets: list[Asset] | AssetCollection | None = None,
     title: str = "",

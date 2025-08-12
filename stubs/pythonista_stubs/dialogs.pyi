@@ -4,14 +4,14 @@ functions and their parameters, to be used for static analysis and autocompletio
 
 import datetime
 from collections.abc import Sequence
-from typing import Any, Literal, TypeAlias
+from typing import Any, Literal, Protocol, TypeAlias, TypeVar
+
+from PIL.Image import Image as PILImage
 
 # These are imported from the `console` module for convenience.
 # We'll alias the types for clarity.
 from .console import _HudIcon
-
-# These are imported from the `ui` module, which is part of Pythonista.
-from .ui import Image
+from .ui import Image as UIImage
 
 class TextField:
     AUTOCAPITALIZE_SENTENCES: int = ...
@@ -68,12 +68,16 @@ def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -
 # -----------------------------------------------------------------------------
 # Dialog Functions
 # -----------------------------------------------------------------------------
+class StrConvertible(Protocol):
+    def __str__(self) -> str: ...
+
+T = TypeVar('T', bound=StrConvertible)
 
 def list_dialog(
     title: str = "",
-    items: Sequence[Any] | list[dict[str, Any]] | None = None,
+    items: list[T] | None = None,
     multiple: bool = False,
-) -> Any | list[Any] | None:
+) -> list[T] | None:
     """Presents a list of items and returns the one(s) that were selected.
 
     When the dialog is cancelled, None is returned. The `items` list can
@@ -245,11 +249,11 @@ def duration_dialog(title: str = "") -> float | None:
 # Sharing Functions
 # -----------------------------------------------------------------------------
 
-def share_image(img: Image | Any) -> None:
+def share_image(img: UIImage | PILImage) -> None:
     """Shows the system sharing dialog for a given image.
 
     Args:
-        img (Union[ui.Image, PIL.Image.Image]): The image to share.
+        img (ui.Image | PIL.Image.Image): The image to share.
 
     """
     ...
@@ -277,7 +281,7 @@ def share_url(url: str) -> None:
 # -----------------------------------------------------------------------------
 
 def pick_document(types: list[str] = ["public.data"]) -> str | None:
-    """Shows the system’s document picker for importing a file.
+    """Shows the system's document picker for importing a file.
 
     Args:
         types (List[str], optional): Universal Type Identifiers (UTIs) for

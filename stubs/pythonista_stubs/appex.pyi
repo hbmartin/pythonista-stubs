@@ -2,16 +2,13 @@
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Any, Literal, TypeAlias
+from typing import Any, Literal, TypeAlias, overload
+
+from PIL.Image import Image as PILImage
 
 # These are imported from the `ui` module, which is part of Pythonista.
-from .ui import View, Image
-
-# Assuming 'PIL' is from the Pillow library.
-try:
-    from PIL.Image import Image as PilImage
-except ImportError:
-    PilImage: Any  # type: ignore[no-redef]
+from .ui import Image as UIImage
+from .ui import View
 
 # -----------------------------------------------------------------------------
 # General Functions
@@ -55,7 +52,13 @@ def get_attachments(uti: str = "public.data") -> list[Any]:
 
 _ImageType: TypeAlias = Literal["ui", "pil"]
 
-def get_images(image_type: _ImageType = "pil") -> list[Image | PilImage]:
+@overload
+def get_images() -> list[PILImage]: ...
+@overload
+def get_images(image_type: Literal["pil"]) -> list[PILImage]: ...
+@overload
+def get_images(image_type: Literal["ui"]) -> list[UIImage]: ...
+def get_images(image_type: _ImageType = "pil") -> list[UIImage | PILImage]:
     """Return a list of images in the input of the share sheet.
 
     Args:
@@ -68,7 +71,13 @@ def get_images(image_type: _ImageType = "pil") -> list[Image | PilImage]:
     """
     ...
 
-def get_image(image_type: _ImageType = "pil") -> Image | PilImage | None:
+@overload
+def get_image() -> PILImage | None: ...
+@overload
+def get_image(image_type: Literal["pil"]) -> PILImage | None: ...
+@overload
+def get_image(image_type: Literal["ui"]) -> UIImage | None: ...
+def get_image(image_type: _ImageType = "pil") -> UIImage | PILImage | None:
     """Return the first image in the input of the share sheet.
 
     Args:
@@ -82,7 +91,7 @@ def get_image(image_type: _ImageType = "pil") -> Image | PilImage | None:
     ...
 
 def get_image_data() -> bytes | None:
-    """Return raw image data for the first image in the share sheet’s input.
+    """Return raw image data for the first image in the share sheet's input.
 
     Returns:
         Optional[bytes]: The raw image data as a byte string, or None.
@@ -91,7 +100,7 @@ def get_image_data() -> bytes | None:
     ...
 
 def get_images_data() -> list[bytes]:
-    """Return raw image data for all images in the share sheet’s input.
+    """Return raw image data for all images in the share sheet's input.
 
     Returns:
         List[bytes]: A list of byte strings, or an empty list.
@@ -109,7 +118,7 @@ def get_text() -> str | None:
     ...
 
 def get_urls() -> list[str]:
-    """Return a list of URLs in the share sheet’s input.
+    """Return a list of URLs in the share sheet's input.
 
     Returns:
         List[str]: A list of URLs, or an empty list.
@@ -118,7 +127,7 @@ def get_urls() -> list[str]:
     ...
 
 def get_url() -> str | None:
-    """Return the first URL in the share sheet’s input.
+    """Return the first URL in the share sheet's input.
 
     Returns:
         Optional[str]: The first URL, or None.
@@ -127,7 +136,7 @@ def get_url() -> str | None:
     ...
 
 def get_file_paths() -> list[str]:
-    """Return a list of file paths in the share sheet’s input.
+    """Return a list of file paths in the share sheet's input.
 
     Returns:
         List[str]: A list of file paths, or an empty list.
@@ -136,7 +145,7 @@ def get_file_paths() -> list[str]:
     ...
 
 def get_file_path() -> str | None:
-    """Return the first file path in the share sheet’s input.
+    """Return the first file path in the share sheet's input.
 
     Returns:
         Optional[str]: The first file path, or None.
@@ -145,7 +154,7 @@ def get_file_path() -> str | None:
     ...
 
 def get_vcards() -> list[str]:
-    """Return a list of VCard records in the share sheet’s input.
+    """Return a list of VCard records in the share sheet's input.
 
     Returns:
         List[str]: A list of VCard records as strings, or an empty list.
@@ -154,7 +163,7 @@ def get_vcards() -> list[str]:
     ...
 
 def get_vcard() -> str | None:
-    """Return the first VCard record in the share sheet’s input.
+    """Return the first VCard record in the share sheet's input.
 
     Returns:
         Optional[str]: The first VCard record as a string, or None.
@@ -185,7 +194,7 @@ def get_widget_view() -> View | None:
     ...
 
 def set_widget_view(view: View | None) -> None:
-    """Set the widget’s view to a ui.View object.
+    """Set the widget's view to a ui.View object.
 
     Args:
         view (Optional[ui.View]): The view to set, or None to remove the current view.
