@@ -4,7 +4,7 @@ according to [pythonista.cb docs](https://omz-software.com/pythonista/docs/ios/c
 
 from typing import Protocol
 
-from _cb import (  # type: ignore[import-not-found]
+from _cb import (
     CH_PROP_AUTHENTICATED_SIGNED_WRITES,
     CH_PROP_BROADCAST,
     CH_PROP_EXTENDED_PROPERTIES,
@@ -80,6 +80,14 @@ class _CentralManagerDelegate(Protocol):
     def did_write_value(self, c: Characteristic, error: str | None) -> None: ...
     def did_update_value(self, c: Characteristic, error: str | None) -> None: ...
     def did_update_state(self) -> None: ...
+
+# Documented at https://github.com/hbmartin/pythonista-stubs/pull/11#issuecomment-3180673698
+class SharedCentralManager(CentralManager):
+    delegate: _CentralManagerDelegate | None = None
+    verbose: bool = False
+    def verbose_log(self) -> None: ...
+
+shared_manager: SharedCentralManager | None
 
 def set_central_delegate(delegate: _CentralManagerDelegate) -> None: ...
 def set_verbose(flag: bool) -> None: ...
