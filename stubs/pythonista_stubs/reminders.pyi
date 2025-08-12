@@ -1,10 +1,9 @@
-"""
-This is a stub file for the `reminders` module, providing type hints for its
+"""This is a stub file for the `reminders` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import List, Optional, Tuple, Literal, Union
 import datetime
+from typing import Literal
 
 # -----------------------------------------------------------------------------
 # Alarm Objects
@@ -12,9 +11,9 @@ import datetime
 class Alarm:
     """Alarm objects represent an alarm associated with a reminder."""
 
-    date: Optional[datetime.datetime]
+    date: datetime.datetime | None
     """The absolute date when the alarm is triggered."""
-    location: Optional[Union[Tuple[str, float, float], Tuple[str, float, float, float]]]
+    location: tuple[str, float, float] | tuple[str, float, float, float] | None
     """The title, coordinates, and radius for a geo-location-based alarm.
     Represented as a 3- or 4-tuple: (title, latitude, longitude[, radius]).
     """
@@ -29,15 +28,15 @@ class Alarm:
 class Reminder:
     """Reminder objects represent a single reminder in a list."""
 
-    def __init__(self, calendar: Optional["Calendar"] = None): ...
+    def __init__(self, calendar: Calendar | None = None): ...
 
-    alarms: List[Alarm]
+    alarms: list[Alarm]
     """A list of Alarm objects associated with this reminder."""
     completed: bool
     """Whether the reminder has been completed (checked off) yet."""
-    completion_date: Optional[datetime.datetime]
+    completion_date: datetime.datetime | None
     """The date when the reminder was completed, or None if not completed."""
-    due_date: Optional[datetime.datetime]
+    due_date: datetime.datetime | None
     """The due date of the reminder."""
     notes: str
     """Additional notes for the reminder."""
@@ -71,21 +70,24 @@ class Calendar:
 # Functions
 # -----------------------------------------------------------------------------
 def get_reminders(
-    calendar: Optional[Calendar] = None,
-    completed: Optional[bool] = None,
-) -> List[Reminder]:
+    calendar: Calendar | None = None,
+    completed: bool | None = None,
+) -> list[Reminder]:
     """Return all reminders in the given Calendar (or all calendars).
+
     Args:
         calendar (Calendar, optional): The calendar to get reminders from.
             Defaults to None.
         completed (bool, optional): Filters reminders by completion status.
             Defaults to None (all reminders).
+
     Returns:
-        List[Reminder]: A list of Reminder objects.
+        list[Reminder]: A list of Reminder objects.
+
     """
     ...
 
-def get_all_calendars() -> List[Calendar]:
+def get_all_calendars() -> list[Calendar]:
     """Return a list of all available Calendar objects."""
     ...
 
@@ -93,29 +95,38 @@ def get_default_calendar() -> Calendar:
     """Return the Calendar that is used for new reminders by default."""
     ...
 
-def get_calendar(calendar_id: str) -> Optional[Calendar]:
+def get_calendar(calendar_id: str) -> Calendar | None:
     """Return a specific Calendar by its unique identifier.
+
     Args:
         calendar_id (str): The unique identifier of the calendar.
+
     Returns:
-        Optional[Calendar]: The Calendar object, or None if not found.
+        Calendar | None: The Calendar object, or None if not found.
+
     """
     ...
 
 def delete_reminder(reminder: Reminder) -> bool:
     """Remove a Reminder from the database.
+
     Args:
         reminder (Reminder): The Reminder object to remove.
+
     Returns:
         bool: True if the removal was successful, False otherwise.
+
     """
     ...
 
 def delete_calendar(calendar: Calendar) -> bool:
     """Remove a Calendar from the database.
+
     Args:
         calendar (Calendar): The Calendar object to remove.
+
     Returns:
         bool: True if the removal was successful, False otherwise.
+
     """
     ...

@@ -16,7 +16,7 @@ def get_location() -> dict[str, float] | None:
     """Return the most recently obtained location data.
 
     Returns:
-        Optional[Dict[str, float]]: A dictionary with 'longitude', 'latitude',
+        dict[str, float] | None: A dictionary with 'longitude', 'latitude',
         and 'timestamp' keys, or None.
 
     """

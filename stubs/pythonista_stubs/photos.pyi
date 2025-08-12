@@ -32,7 +32,7 @@ class Asset:
         """Fetch the asset's image data as a ui.Image object.
 
         Args:
-            size (Optional[tuple[int, int]]): The desired size of the returned image,
+            size (tuple[int, int] | None): The desired size of the returned image,
                 specified as a tuple of (width, height). If None, the original
                 image dimensions are used.
             crop (bool): If True, the image will be cropped to fit the specified
@@ -130,7 +130,6 @@ class AssetCollection:
 # -----------------------------------------------------------------------------
 _MediaType: TypeAlias = Literal["image", "video"]
 _CameraType: TypeAlias = Literal["rear", "front"]
-_MapType: TypeAlias = Literal["standard", "satellite", "hybrid"]
 
 def capture_image(camera: _CameraType = "rear") -> PILImage | None:
     """Show a standard camera interface and return the captured image."""
@@ -203,10 +202,3 @@ def pick_asset(
     title: str = ...,
     multi: Literal[False] = ...,
 ) -> Asset | None: ...
-def pick_asset(
-    assets: list[Asset] | AssetCollection | None = None,
-    title: str = "",
-    multi: bool = False,
-) -> Asset | None | list[Asset]:
-    """Show a dialog with a grid of thumbnails for the given assets."""
-    ...

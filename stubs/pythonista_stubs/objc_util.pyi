@@ -16,7 +16,7 @@ from typing import (
 )
 
 # A type variable for the decorator to preserve function signatures.
-F = TypeVar("F", bound=Callable)
+_F = TypeVar("_F", bound=Callable)
 
 class ObjCClass:
     """Wrapper for an Objective-C class.
@@ -202,7 +202,7 @@ def uiimage_to_png(img: ObjCInstance) -> bytes:
     """
     ...
 
-def on_main_thread(func: F) -> F:
+def on_main_thread(func: _F) -> _F:
     """Decorator to call a function on the UIKit main thread.
 
     This is typically used to decorate another function, but can also be used
@@ -234,7 +234,6 @@ def sel(name: str) -> ctypes.c_void_p:
 class CGPoint(ctypes.Structure):
     """Core Graphics point structure."""
 
-    _fields_ = ...
     x: float
     y: float
     def __init__(self, x: float = 0.0, y: float = 0.0) -> None: ...
@@ -242,7 +241,6 @@ class CGPoint(ctypes.Structure):
 class CGSize(ctypes.Structure):
     """Core Graphics size structure."""
 
-    _fields_ = ...
     width: float
     height: float
     def __init__(self, width: float = 0.0, height: float = 0.0) -> None: ...
@@ -250,7 +248,6 @@ class CGSize(ctypes.Structure):
 class CGVector(ctypes.Structure):
     """Core Graphics vector structure."""
 
-    _fields_ = ...
     dx: float
     dy: float
     def __init__(self, dx: float = 0.0, dy: float = 0.0) -> None: ...
@@ -258,7 +255,6 @@ class CGVector(ctypes.Structure):
 class CGRect(ctypes.Structure):
     """Core Graphics rectangle structure."""
 
-    _fields_ = ...
     origin: CGPoint
     size: CGSize
     def __init__(
@@ -270,7 +266,6 @@ class CGRect(ctypes.Structure):
 class CGAffineTransform(ctypes.Structure):
     """Core Graphics affine transformation matrix."""
 
-    _fields_ = ...
     a: float
     b: float
     c: float
@@ -290,7 +285,6 @@ class CGAffineTransform(ctypes.Structure):
 class UIEdgeInsets(ctypes.Structure):
     """UIKit edge insets structure."""
 
-    _fields_ = ...
     top: float
     left: float
     bottom: float
@@ -306,7 +300,6 @@ class UIEdgeInsets(ctypes.Structure):
 class NSRange(ctypes.Structure):
     """Foundation range structure."""
 
-    _fields_ = ...
     location: int
     length: int
     def __init__(self, location: int = 0, length: int = 0) -> None: ...

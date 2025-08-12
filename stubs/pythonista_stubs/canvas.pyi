@@ -1,9 +1,6 @@
-"""
-This is a stub file for the `canvas` module, providing type hints for its
+"""This is a stub file for the `canvas` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
-
-from typing import Optional, Tuple
 
 # -----------------------------------------------------------------------------
 # Blend Modes (Constants)
@@ -43,7 +40,7 @@ def clear() -> None:
     """Clears the canvas."""
     ...
 
-def get_size() -> Tuple[float, float]:
+def get_size() -> tuple[float, float]:
     """Return the size of the canvas as a tuple of width and height."""
     ...
 
@@ -90,7 +87,12 @@ def set_stroke_color(r: float, g: float, b: float, a: float = 1.0) -> None:
 
 # Vector Drawing Functions
 def add_curve(
-    cp1x: float, cp1y: float, cp2x: float, cp2y: float, x: float, y: float
+    cp1x: float,
+    cp1y: float,
+    cp2x: float,
+    cp2y: float,
+    x: float,
+    y: float,
 ) -> None:
     """Adds a cubic bezier curve to the current path."""
     ...
@@ -185,8 +187,8 @@ def draw_image(
     image_name: str,
     x: float,
     y: float,
-    width: Optional[float] = None,
-    height: Optional[float] = None,
+    width: float | None = None,
+    height: float | None = None,
 ) -> None:
     """Draws the image with the given name in a rectangle."""
     ...
@@ -195,11 +197,11 @@ def draw_clipboard(x: float, y: float, width: float, height: float) -> None:
     """Draw the image in the clipboard in a given rectangle."""
     ...
 
-def get_clipboard_size() -> Tuple[float, float]:
+def get_clipboard_size() -> tuple[float, float]:
     """Return the size of the image in the clipboard in points."""
     ...
 
-def get_image_size(image_name: str) -> Tuple[float, float]:
+def get_image_size(image_name: str) -> tuple[float, float]:
     """Returns the size of the image with the given name in points."""
     ...
 
@@ -215,7 +217,9 @@ def draw_text(
     ...
 
 def get_text_size(
-    text: str, font_name: str = "Helvetica", font_size: float = 16.0
-) -> Tuple[float, float]:
+    text: str,
+    font_name: str = "Helvetica",
+    font_size: float = 16.0,
+) -> tuple[float, float]:
     """Get the size of a line of text as a tuple of (width, height)."""
     ...

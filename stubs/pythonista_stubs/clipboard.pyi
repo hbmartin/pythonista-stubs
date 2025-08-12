@@ -1,35 +1,30 @@
-"""
-This is a stub file for the `clipboard` module, providing type hints for its
+"""This is a stub file for the `clipboard` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Optional, Literal, Any
+from typing import Literal, TypeAlias
 
-# Assuming 'PIL' is from the Pillow library, which is not part of the standard library
-# and might not be available in all Pythonista environments.
-# We'll use `Any` as a fallback or assume a type alias exists.
-try:
-    from PIL.Image import Image
-except ImportError:
-    Image: Any  # type: ignore[no-redef]
+from PIL.Image import Image
 
 def get() -> str:
-    """Returns the clipboard’s content as a Unicode string.
+    """Returns the clipboard's content as a Unicode string.
 
     Returns:
         str: The content of the clipboard.
+
     """
     ...
 
-def set(string: str) -> None:
-    """Sets the clipboard’s content to a new string.
+def set(string: str) -> None:  # noqa: A001
+    """Sets the clipboard's content to a new string.
 
     Args:
         string (str): The new content for the clipboard.
+
     """
     ...
 
-def get_image(idx: int = 0) -> Optional[Image]:
+def get_image(idx: int = 0) -> Image | None:
     """Returns an image from the clipboard.
 
     If there are multiple images in the clipboard, the `idx` parameter can be
@@ -40,15 +35,18 @@ def get_image(idx: int = 0) -> Optional[Image]:
         idx (int, optional): The index of the image to retrieve. Defaults to 0.
 
     Returns:
-        Optional[Image]: The image from the clipboard, or None if no image
+        Image | None: The image from the clipboard, or None if no image
             was found at the given index.
+
     """
     ...
 
-_ImageFormat = Literal["png", "jpeg"]
+_ImageFormat: TypeAlias = Literal["png", "jpeg"]
 
 def set_image(
-    image: Image, format: _ImageFormat = "png", jpeg_quality: float = 0.75
+    image: Image,
+    format: _ImageFormat = "png",
+    jpeg_quality: float = 0.75,
 ) -> None:
     """Stores a given PIL Image in the clipboard.
 
@@ -59,5 +57,6 @@ def set_image(
         jpeg_quality (float, optional): The quality for JPEG format. Should be
             a float between 0.0 and 1.0. This is ignored if `format` is 'png'.
             Defaults to 0.75.
+
     """
     ...
