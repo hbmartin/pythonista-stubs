@@ -11,7 +11,7 @@ class Image:
     """Represents an image that can be displayed in the user interface."""
 
     @classmethod
-    def from_data(cls, image_data: bytes, scale: float | None = None) -> Image:
+    def from_data(cls, image_data: bytes, scale: float | None = None) -> "Image":
         """Create an image from binary image data.
 
         Args:
@@ -25,7 +25,7 @@ class Image:
         ...
 
     @classmethod
-    def named(cls, image_name: str) -> Image | None:
+    def named(cls, image_name: str) -> "Image" | None:
         """Create an image from a built-in or local image file.
 
         Args:

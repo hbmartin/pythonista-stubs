@@ -1,18 +1,18 @@
-"""
-This is a stub file for the `editor` module, providing type hints for its
+"""This is a stub file for the `editor` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Optional, Tuple, Literal
+from typing import Literal, TypeAlias
 
 # We'll use a minimal stub for the ui.View type from the ui module.
 class View: ...
 
-def get_path() -> Optional[str]:
-    """Returns the absolute file path of the script that is currently open in the editor.
+def get_path() -> str | None:
+    """Returns the absolute path of the script that is currently open in the editor.
 
     Returns:
         Optional[str]: The absolute file path, or None if no script is open.
+
     """
     ...
 
@@ -21,10 +21,11 @@ def get_text() -> str:
 
     Returns:
         str: The full text content of the editor.
+
     """
     ...
 
-def get_selection() -> Optional[Tuple[int, int]]:
+def get_selection() -> tuple[int, int] | None:
     """Returns the selected range as a tuple of the form (start, end).
 
     The `start` and `end` values are character indices.
@@ -32,19 +33,21 @@ def get_selection() -> Optional[Tuple[int, int]]:
     Returns:
         Optional[Tuple[int, int]]: The start and end indices of the selection,
             or None if no file is currently open.
+
     """
     ...
 
-def get_line_selection() -> Optional[Tuple[int, int]]:
+def get_line_selection() -> tuple[int, int] | None:
     """Returns the range of all lines that are part of the current selection.
 
     Returns:
         Optional[Tuple[int, int]]: The start and end indices of the line selection,
             or None if no file is currently open.
+
     """
     ...
 
-def set_selection(start: int, end: Optional[int] = None, scroll: bool = False) -> None:
+def set_selection(start: int, end: int | None = None, scroll: bool = False) -> None:
     """Sets the selected range in the editor.
 
     Args:
@@ -53,6 +56,7 @@ def set_selection(start: int, end: Optional[int] = None, scroll: bool = False) -
             If None, the caret is positioned at `start` with no text selected.
         scroll (bool, optional): If True, scrolls the view to make the selection
             visible. Defaults to False.
+
     """
     ...
 
@@ -66,10 +70,11 @@ def replace_text(start: int, end: int, replacement: str) -> None:
         start (int): The starting character index of the range to replace.
         end (int): The ending character index of the range to replace.
         replacement (str): The new text to insert.
+
     """
     ...
 
-def make_new_file(name: Optional[str] = None, content: Optional[str] = None) -> None:
+def make_new_file(name: str | None = None, content: str | None = None) -> None:
     """Creates a new file and opens it in the editor.
 
     If a file with the given name already exists, a numeric suffix is
@@ -80,6 +85,7 @@ def make_new_file(name: Optional[str] = None, content: Optional[str] = None) -> 
             Defaults to None.
         content (Optional[str], optional): The initial content of the new file.
             If omitted, an empty file is created. Defaults to None.
+
     """
     ...
 
@@ -88,24 +94,30 @@ def open_file(name: str, new_tab: bool = False) -> None:
 
     Args:
         name (str): The path to the file. It can be relative to the script
-            library’s root directory or an absolute path. The .py extension
+            library's root directory or an absolute path. The .py extension
             can be omitted.
         new_tab (bool, optional): If True, the file is opened in a new tab.
             Defaults to False.
+
     """
     ...
 
-def apply_ui_theme(ui_view: View, theme_name: Optional[str] = None) -> None:
+def apply_ui_theme(ui_view: View, theme_name: str | None = None) -> None:
     """Styles a ui.View (and its descendants) with the given UI theme.
 
     Args:
         ui_view (ui.View): The view to be styled.
         theme_name (Optional[str], optional): The name of the theme. If None,
             the currently selected theme is used. Defaults to None.
+
     """
     ...
 
-def present_themed(ui_view: View, theme_name: Optional[str] = None, **kwargs) -> None:
+def present_themed(
+    ui_view: View,
+    theme_name: str | None = None,
+    **kwargs,
+) -> None:
     """Styles a ui.View and presents it.
 
     This function combines `apply_ui_theme()` and `ui.View.present()`.
@@ -115,17 +127,18 @@ def present_themed(ui_view: View, theme_name: Optional[str] = None, **kwargs) ->
         ui_view (ui.View): The view to be styled and presented.
         theme_name (Optional[str], optional): The name of the theme. If None,
             the currently selected theme is used. Defaults to None.
+
     """
     ...
 
-_AnnotationStyle = Literal["success", "warning", "error"]
+_AnnotationStyle: TypeAlias = Literal["success", "warning", "error"]
 
 def annotate_line(
     lineno: int,
     text: str = "",
     style: _AnnotationStyle = "warning",
     expanded: bool = True,
-    filename: Optional[str] = None,
+    filename: str | None = None,
     scroll: bool = False,
 ) -> None:
     """Annotates a line of code in the editor with a label.
@@ -142,15 +155,17 @@ def annotate_line(
             Defaults to None.
         scroll (bool, optional): If True, scrolls to the annotated line.
             Defaults to False.
+
     """
     ...
 
-def clear_annotations(filename: Optional[str] = None) -> None:
+def clear_annotations(filename: str | None = None) -> None:
     """Removes all annotations that were added via `annotate_line()`.
 
     Args:
         filename (Optional[str], optional): The path to the file from which to
             clear annotations. If None, the file currently open is used.
             Defaults to None.
+
     """
     ...

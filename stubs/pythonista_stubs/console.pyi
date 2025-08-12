@@ -1,21 +1,22 @@
-"""
-This is a stub file for the `console` module, providing type hints for its
+"""This is a stub file for the `console` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Optional, Union, Tuple, Sequence, Literal
+from collections.abc import Sequence
+from typing import Literal, TypeAlias
 
 # These are simple utility functions.
 def clear() -> None:
     """Clears the console output."""
     ...
 
-def set_font(name: Optional[str] = None, size: Optional[int] = None) -> None:
+def set_font(name: str | None = None, size: int | None = None) -> None:
     """Sets the font and font size for the following output.
 
     Args:
         name (str, optional): The font name (e.g. "Menlo"). If None, reset to default.
         size (int, optional): The font size. If None, reset to default.
+
     """
     ...
 
@@ -28,14 +29,15 @@ def set_color(r: float, g: float, b: float) -> None:
         r (float): The red component.
         g (float): The green component.
         b (float): The blue component.
+
     """
     ...
 
-def secure_input(prompt: Optional[str] = None) -> str:
+def secure_input(prompt: str | None = None) -> str:
     """Gets user input with hidden characters.
 
-    This function is similar to the built-in raw_input function, but the user’s
-    input is hidden, so that it’s suitable to request passwords and other
+    This function is similar to the built-in raw_input function, but the user's
+    input is hidden, so that it's suitable to request passwords and other
     sensitive information.
 
     Args:
@@ -43,14 +45,16 @@ def secure_input(prompt: Optional[str] = None) -> str:
 
     Returns:
         str: The string entered by the user.
+
     """
     ...
 
-def show_image(image_path: Union[str]) -> None:
+def show_image(image_path: str) -> None:
     """Shows an image in the console output area.
 
     Args:
         image_path (str or Path): The path to the image file.
+
     """
     ...
 
@@ -58,14 +62,14 @@ def alert(
     title: str,
     message: str = "",
     button1: str = "OK",
-    button2: Optional[str] = None,
-    button3: Optional[str] = None,
+    button2: str | None = None,
+    button3: str | None = None,
     hide_cancel_button: bool = False,
 ) -> int:
     """Shows an alert dialog with up to three custom buttons.
 
     The selected button is returned as an integer (button1 => 1, etc.).
-    Unless `hide_cancel_button` is True, all alert dialogs contain a ‘Cancel’
+    Unless `hide_cancel_button` is True, all alert dialogs contain a 'Cancel'
     button that sends a KeyboardInterrupt.
 
     Args:
@@ -79,6 +83,7 @@ def alert(
 
     Returns:
         int: The integer corresponding to the selected button (1, 2, or 3).
+
     """
     ...
 
@@ -92,7 +97,7 @@ def input_alert(
     """Shows a dialog with a single text field.
 
     The text field can be pre-filled with the `input` parameter. The text
-    that was entered by the user is returned. The ‘Cancel’ button sends a
+    that was entered by the user is returned. The 'Cancel' button sends a
     KeyboardInterrupt.
 
     Args:
@@ -107,6 +112,7 @@ def input_alert(
 
     Returns:
         str: The text entered by the user.
+
     """
     ...
 
@@ -120,7 +126,7 @@ def password_alert(
     """Shows a dialog with a password entry text field.
 
     The password field can be pre-filled with the `password` parameter.
-    The password that was entered by the user is returned. The ‘Cancel’ button
+    The password that was entered by the user is returned. The 'Cancel' button
     sends a KeyboardInterrupt.
 
     Args:
@@ -135,6 +141,7 @@ def password_alert(
 
     Returns:
         str: The password entered by the user.
+
     """
     ...
 
@@ -144,11 +151,11 @@ def login_alert(
     login: str = "",
     password: str = "",
     ok_button_title: str = "OK",
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """Shows a dialog with two text fields, one for login and one for a password.
 
     The text fields can be pre-filled with the `login` and `password` parameters.
-    Returns a tuple of the entered text as `(login, password)`. The ‘Cancel’
+    Returns a tuple of the entered text as `(login, password)`. The 'Cancel'
     button sends a KeyboardInterrupt.
 
     Args:
@@ -163,6 +170,7 @@ def login_alert(
 
     Returns:
         Tuple[str, str]: A tuple containing the entered login and password.
+
     """
     ...
 
@@ -174,7 +182,7 @@ def hide_activity() -> None:
     """Hides the animated “network activity indicator” in the status bar."""
     ...
 
-_HudIcon = Literal["success", "error"]
+_HudIcon: TypeAlias = Literal["success", "error"]
 
 def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -> None:
     """Shows a HUD-style alert with the given message.
@@ -187,6 +195,7 @@ def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -
             symbol) or 'error' (a cross symbol). Defaults to 'success'.
         duration (float, optional): How long the alert is shown. It Can be
             between 0.25 and 5.0 seconds. Defaults to 1.8 seconds.
+
     """
     ...
 
@@ -196,6 +205,7 @@ def write_link(title: str, link_url: str) -> None:
     Args:
         title (str): The title of the link to display.
         link_url (str): The URL link should open.
+
     """
     ...
 
@@ -203,7 +213,7 @@ def hide_output() -> None:
     """Hides the console output area with a sliding animation."""
     ...
 
-def quicklook(file_path: Union[str, Sequence[str]]) -> None:
+def quicklook(file_path: str | Sequence[str]) -> None:
     """Shows a full-screen preview of local files.
 
     The function returns when the preview is dismissed.
@@ -211,10 +221,11 @@ def quicklook(file_path: Union[str, Sequence[str]]) -> None:
     Args:
         file_path (str or Path or Sequence): The path to a single file, or
             a sequence of paths to preview multiple files.
+
     """
     ...
 
-def open_in(file_path: str) -> Optional[str]:
+def open_in(file_path: str) -> str | None:
     """Shows the iOS “Open in...” menu for the specified file.
 
     Args:
@@ -223,6 +234,7 @@ def open_in(file_path: str) -> Optional[str]:
     Returns:
         Optional[str]: The bundle identifier of the selected app, or None
             if the menu was cancelled or no app can open the file.
+
     """
     ...
 
@@ -232,6 +244,7 @@ def set_idle_timer_disabled(flag: bool) -> None:
     Args:
         flag (bool): If True, the idle timer is disabled (a device won't go to
             sleep). If False, the idle timer is re-enabled.
+
     """
     ...
 
@@ -240,5 +253,6 @@ def is_in_background() -> bool:
 
     Returns:
         bool: True if the app is in the background, False otherwise.
+
     """
     ...

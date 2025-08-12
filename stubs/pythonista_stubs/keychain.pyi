@@ -5,11 +5,12 @@ This module provides simple access to secure password storage.
 Note:
     The keychain is not shared between apps, so you cannot use this to
     access passwords stored in Safari's keychain, for example.
+
 """
 
-from typing import Optional, List, Tuple, Any
+from typing import Any
 
-def get_password(service: str, account: str) -> Optional[str]:
+def get_password(service: str, account: str) -> str | None:
     """Get a password from the keychain.
 
     Args:
@@ -19,6 +20,7 @@ def get_password(service: str, account: str) -> Optional[str]:
     Returns:
         The password as a string, or `None` if no password is found
         for the given service and account.
+
     """
     ...
 
@@ -32,6 +34,7 @@ def set_password(service: str, account: str, password: str) -> None:
         service: The name of the service to associate with the password.
         account: The name of the user account.
         password: The password to be stored.
+
     """
     ...
 
@@ -43,6 +46,7 @@ def delete_password(service: str, account: str) -> None:
     Args:
         service: The name of the service.
         account: The name of the user account.
+
     """
     ...
 
@@ -54,4 +58,4 @@ def reset_keychain() -> None:
     """
     ...
 
-def get_services() -> List[Tuple[Any, Any]]: ...
+def get_services() -> list[tuple[Any, Any]]: ...

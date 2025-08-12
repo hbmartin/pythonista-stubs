@@ -1,27 +1,23 @@
-"""
-This is a stub file for the `keyboard` module, providing type hints for its
+"""This is a stub file for the `keyboard` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import List, Literal, Optional, Tuple
+from typing import Literal, TypeAlias
 
-# These are imported from the `ui` module, which is part of Pythonista.
-class View:
-    def __init__(self, *args, **kwargs): ...
-    def add_subview(self, view: "View") -> None: ...
-    def remove_subview(self, view: "View") -> None: ...
-    def present(self, style: str = "sheet", animated: bool = True) -> None: ...
+from .ui import View
 
 # -----------------------------------------------------------------------------
 # Functions
 # -----------------------------------------------------------------------------
-_Appearance = Literal["dark", "light"]
-_Mode = Literal["current", "minimized", "expanded"]
+_Appearance: TypeAlias = Literal["dark", "light"]
+_Mode: TypeAlias = Literal["current", "minimized", "expanded"]
 
 def backspace(times: int = 1) -> None:
     """Delete backwards in the current document.
+
     Args:
         times (int, optional): The number of characters to delete. Defaults to 1.
+
     """
     ...
 
@@ -33,7 +29,7 @@ def get_document_id() -> str:
     """Return a unique identifier (UUID) for the current document."""
     ...
 
-def get_input_context() -> Tuple[str, str]:
+def get_input_context() -> tuple[str, str]:
     """Return a 2-tuple with the text immediately before and after the cursor."""
     ...
 
@@ -41,11 +37,13 @@ def get_selected_text() -> str:
     """Return the currently selected text or an empty string."""
     ...
 
-def get_text_replacements() -> Optional[List[Tuple[str, str]]]:
+def get_text_replacements() -> list[tuple[str, str]] | None:
     """Return a list of text replacements.
+
     Returns:
         Optional[List[Tuple[str, str]]]: A list of (phrase, shortcut) tuples,
         or None if not running in the keyboard.
+
     """
     ...
 
@@ -73,10 +71,13 @@ def play_input_click() -> None:
     """Play an input click sound."""
     ...
 
-def set_view(view: Optional[View] = None, mode: _Mode = "current") -> None:
+def set_view(view: View | None = None, mode: _Mode = "current") -> None:
     """Sets a custom ui.View as the keyboard's UI.
+
     Args:
         view (ui.View, optional): The view to display. Pass None to close.
-        mode (str, optional): The presentation mode ('minimized', 'expanded', or 'current').
+        mode (str, optional): The presentation mode, one of 'minimized',
+            'expanded', or 'current'.
+
     """
     ...

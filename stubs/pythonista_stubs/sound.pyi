@@ -1,9 +1,8 @@
-"""
-This is a stub file for the `sound` module, providing type hints for its
+"""This is a stub file for the `sound` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Callable, Optional, Tuple, Mapping
+from collections.abc import Callable, Mapping
 
 # -----------------------------------------------------------------------------
 # Functions
@@ -14,16 +13,19 @@ def play_effect(
     pitch: float = 1.0,
     pan: float = 0.0,
     looping: bool = False,
-) -> Optional["Effect"]:
+) -> Effect | None:
     """Play the sound effect with the given name.
+
     Args:
         name (str): The name of the sound effect or a file path.
         volume (float, optional): The volume of the effect (0.0-1.0).
         pitch (float, optional): The pitch of the effect. Defaults to 1.0.
         pan (float, optional): The stereo position (-1.0 to 1.0). Defaults to 0.0.
         looping (bool, optional): Whether the effect should loop. Defaults to False.
+
     Returns:
         Optional[Effect]: An Effect object, or None if too many effects are playing.
+
     """
     ...
 
@@ -31,7 +33,7 @@ def stop_all_effects() -> None:
     """Stop all sound effects that are currently playing."""
     ...
 
-def stop_effect(effect: "Effect") -> None:
+def stop_effect(effect: Effect) -> None:
     """Stop playback of the given sound effect."""
     ...
 
@@ -50,6 +52,7 @@ class Effect:
     """Represents a sound effect that is currently playing.
     Effect objects are returned from `play_effect()`.
     """
+
     def stop(self) -> None:
         """Stop playback of the sound effect."""
         ...
@@ -67,9 +70,9 @@ class Effect:
     @pitch.setter
     def pitch(self, value: float) -> None: ...
     @property
-    def position(self) -> Tuple[float, float, float]: ...
+    def position(self) -> tuple[float, float, float]: ...
     @position.setter
-    def position(self, value: Tuple[float, float, float]) -> None: ...
+    def position(self, value: tuple[float, float, float]) -> None: ...
     @property
     def volume(self) -> float: ...
     @volume.setter
@@ -80,6 +83,7 @@ class Effect:
 # -----------------------------------------------------------------------------
 class Player:
     """Provides an interface for playing audio files from disk."""
+
     def __init__(self, file_path: str): ...
     def play(self) -> None:
         """Start playing audio."""
@@ -92,12 +96,11 @@ class Player:
     def pause(self) -> None:
         """Stop playing audio, but keep the current playback position."""
         ...
-
     current_time: float
     """The current playback position in seconds."""
     duration: float
     """The duration of the audio track (read-only)."""
-    finished_handler: Optional[Callable[[], None]]
+    finished_handler: Callable[[], None] | None
     """A function that is called when the player finishes playing."""
     number_of_loops: int
     """The number of times the audio track should be repeated."""
@@ -111,11 +114,14 @@ class Player:
 # -----------------------------------------------------------------------------
 class Recorder:
     """High-level methods for recording audio files from the microphone."""
+
     def __init__(self, file_path: str): ...
-    def record(self, duration: Optional[float] = None) -> None:
+    def record(self, duration: float | None = None) -> None:
         """Start recording audio from the microphone.
+
         Args:
             duration (float, optional): The number of seconds to record.
+
         """
         ...
 
@@ -126,12 +132,11 @@ class Recorder:
     def pause(self) -> None:
         """Pause recording audio."""
         ...
-
     current_time: float
     """The current duration of the active recording."""
     recording: bool
     """Whether the recorder is currently recording."""
-    meters: Mapping[str, Tuple[float, float]]
+    meters: Mapping[str, tuple[float, float]]
     """The current average and peak power (read-only).
     Example: {'average': (-35.3, -30.1), 'peak': (-5.2, -8.2)}
     """
@@ -141,7 +146,8 @@ class Recorder:
 # -----------------------------------------------------------------------------
 class MIDIPlayer:
     """Simple playback functions for MIDI (.mid) files."""
-    def __init__(self, file_path: str, sound_bank_path: Optional[str] = None): ...
+
+    def __init__(self, file_path: str, sound_bank_path: str | None = None): ...
     def play(self) -> None:
         """Start playback."""
         ...
@@ -149,7 +155,6 @@ class MIDIPlayer:
     def stop(self) -> None:
         """Stop playback."""
         ...
-
     current_time: float
     """The current playback position."""
     duration: float
