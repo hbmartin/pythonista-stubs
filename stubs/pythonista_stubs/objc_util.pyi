@@ -6,12 +6,13 @@ you to "wrap" existing Objective-C classes in a way that automatically
 converts Python method calls to corresponding Objective-C messages.
 """
 
+import ctypes
+from collections.abc import Callable
+from contextlib import AbstractContextManager
 from typing import (
     Any,
-    Callable,
-    List,
-    Optional,
     TypeVar,
+    overload,
 )
 
 # A type variable for the decorator to preserve function signatures.
@@ -33,10 +34,10 @@ class ObjCClass:
 
     Args:
         name: The name of the Objective-C class as a string.
+
     """
 
-    def __init__(self, name: str) -> None:
-        pass
+    def __init__(self, name: str) -> None: ...
 
 class ObjCInstance:
     """Wrapper for a pointer to an Objective-C object.
@@ -50,10 +51,17 @@ class ObjCInstance:
 
     Args:
         ptr: A pointer to the Objective-C object.
+
     """
 
-    def __init__(self, ptr: Any) -> None:
-        pass
+    def __init__(self, ptr: int | ctypes.c_void_p | None) -> None: ...
+
+    # Collection-like behavior for NSArray, NSDictionary, NSSet
+    def __len__(self) -> int: ...
+    def __getitem__(self, key: Any) -> ObjCInstance: ...
+    def __setitem__(self, key: Any, value: Any) -> None: ...
+    def __iter__(self) -> Any: ...
+    def __contains__(self, item: Any) -> bool: ...
 
 class ObjCBlock:
     """Wrapper for Objective-C blocks (closures).
@@ -65,14 +73,17 @@ class ObjCBlock:
         func: The Python function to wrap as a block.
         restype: The return type of the block (e.g., `NSInteger`).
         argtypes: A list of argument types for the block.
+
     """
 
     def __init__(
-        self, func: Callable, restype: Any = None, argtypes: Optional[List[Any]] = None
-    ) -> None:
-        pass
+        self,
+        func: Callable,
+        restype: type[ctypes._SimpleCData] | None = None,
+        argtypes: list[type[ctypes._SimpleCData]] | None = None,
+    ) -> None: ...
 
-def autoreleasepool() -> Any:
+def autoreleasepool() -> AbstractContextManager[None]:
     """A context manager for NSAutoreleasePool.
 
     This acts as a wrapper for `NSAutoreleasePool` (similar to
@@ -84,15 +95,16 @@ def autoreleasepool() -> Any:
 
     Returns:
         A context manager for an autorelease pool.
+
     """
     ...
 
 def create_objc_class(
     name: str,
     superclass: ObjCClass = ...,
-    methods: Optional[List[Callable]] = None,
-    classmethods: Optional[List[Callable]] = None,
-    protocols: Optional[List[str]] = None,
+    methods: list[Callable] | None = None,
+    classmethods: list[Callable] | None = None,
+    protocols: list[str] | None = None,
     debug: bool = True,
 ) -> ObjCClass:
     """Create and return a new ObjCClass.
@@ -112,6 +124,7 @@ def create_objc_class(
 
     Returns:
         A new ObjCClass object.
+
     """
     ...
 
@@ -120,10 +133,24 @@ def load_framework(name: str) -> None:
 
     Args:
         name: The name of the framework (e.g., 'SceneKit').
+
     """
     ...
 
-def ns(obj: Any) -> Any:
+@overload
+def ns(obj: str) -> ObjCInstance: ...
+@overload
+def ns(obj: float) -> ObjCInstance: ...
+@overload
+def ns(obj: list) -> ObjCInstance: ...
+@overload
+def ns(obj: dict) -> ObjCInstance: ...
+@overload
+def ns(obj: set) -> ObjCInstance: ...
+@overload
+def ns(obj: bytes | bytearray) -> ObjCInstance: ...
+@overload
+def ns(obj: Any) -> ObjCInstance:
     """Convert a Python object to its Objective-C equivalent.
 
     Converts `str` to `NSString`, `list` to `NSMutableArray`, `dict` to
@@ -135,6 +162,7 @@ def ns(obj: Any) -> Any:
     Returns:
         The Objective-C equivalent of the input object, wrapped in an
         ObjCInstance if applicable.
+
     """
     ...
 
@@ -146,6 +174,7 @@ def nsurl(url_or_path: str) -> ObjCInstance:
 
     Returns:
         An `NSURL` object wrapped in an `ObjCInstance`.
+
     """
     ...
 
@@ -157,6 +186,7 @@ def nsdata_to_bytes(data: ObjCInstance) -> bytes:
 
     Returns:
         A Python byte string.
+
     """
     ...
 
@@ -168,6 +198,7 @@ def uiimage_to_png(img: ObjCInstance) -> bytes:
 
     Returns:
         A Python byte string containing PNG data.
+
     """
     ...
 
@@ -182,10 +213,11 @@ def on_main_thread(func: F) -> F:
 
     Returns:
         The decorated function.
+
     """
     ...
 
-def sel(name: str) -> Any:
+def sel(name: str) -> ctypes.c_void_p:
     """Convert a Python string to an Objective-C selector.
 
     Args:
@@ -193,18 +225,92 @@ def sel(name: str) -> Any:
 
     Returns:
         An Objective-C selector object.
+
     """
     ...
 
 # Convenience class wrappers for common Objective-C types
 # These are included as module-level objects for convenience.
-class CGPoint: ...
-class CGSize: ...
-class CGVector: ...
-class CGRect: ...
-class CGAffineTransform: ...
-class UIEdgeInsets: ...
-class NSRange: ...
+class CGPoint(ctypes.Structure):
+    """Core Graphics point structure."""
+
+    _fields_ = ...
+    x: float
+    y: float
+    def __init__(self, x: float = 0.0, y: float = 0.0) -> None: ...
+
+class CGSize(ctypes.Structure):
+    """Core Graphics size structure."""
+
+    _fields_ = ...
+    width: float
+    height: float
+    def __init__(self, width: float = 0.0, height: float = 0.0) -> None: ...
+
+class CGVector(ctypes.Structure):
+    """Core Graphics vector structure."""
+
+    _fields_ = ...
+    dx: float
+    dy: float
+    def __init__(self, dx: float = 0.0, dy: float = 0.0) -> None: ...
+
+class CGRect(ctypes.Structure):
+    """Core Graphics rectangle structure."""
+
+    _fields_ = ...
+    origin: CGPoint
+    size: CGSize
+    def __init__(
+        self,
+        origin: CGPoint | None = None,
+        size: CGSize | None = None,
+    ) -> None: ...
+
+class CGAffineTransform(ctypes.Structure):
+    """Core Graphics affine transformation matrix."""
+
+    _fields_ = ...
+    a: float
+    b: float
+    c: float
+    d: float
+    tx: float
+    ty: float
+    def __init__(
+        self,
+        a: float = 1.0,
+        b: float = 0.0,
+        c: float = 0.0,
+        d: float = 1.0,
+        tx: float = 0.0,
+        ty: float = 0.0,
+    ) -> None: ...
+
+class UIEdgeInsets(ctypes.Structure):
+    """UIKit edge insets structure."""
+
+    _fields_ = ...
+    top: float
+    left: float
+    bottom: float
+    right: float
+    def __init__(
+        self,
+        top: float = 0.0,
+        left: float = 0.0,
+        bottom: float = 0.0,
+        right: float = 0.0,
+    ) -> None: ...
+
+class NSRange(ctypes.Structure):
+    """Foundation range structure."""
+
+    _fields_ = ...
+    location: int
+    length: int
+    def __init__(self, location: int = 0, length: int = 0) -> None: ...
+
 class NSDictionary(ObjCClass): ...
 class NSMutableDictionary(ObjCClass): ...
 class NSArray(ObjCClass): ...
@@ -218,3 +324,20 @@ class NSMutableData(ObjCClass): ...
 class NSNumber(ObjCClass): ...
 class NSURL(ObjCClass): ...
 class NSEnumerator(ObjCClass): ...
+
+# Convenience functions for creating structures
+def CGPointMake(x: float, y: float) -> CGPoint:
+    """Create a CGPoint structure."""
+    ...
+
+def CGSizeMake(width: float, height: float) -> CGSize:
+    """Create a CGSize structure."""
+    ...
+
+def CGRectMake(x: float, y: float, width: float, height: float) -> CGRect:
+    """Create a CGRect structure."""
+    ...
+
+def NSMakeRange(location: int, length: int) -> NSRange:
+    """Create an NSRange structure."""
+    ...

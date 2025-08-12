@@ -25,3 +25,6 @@ jobs:
 
       - name: Type check with mypy
         run: uv run mypy
+
+      - name: Check code formatting with black
+        run: uv run black --check

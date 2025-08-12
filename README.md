@@ -1,9 +1,10 @@
 # Pythonista Stubs
 
 [![PyPI](https://img.shields.io/pypi/v/pythonista-stubs.svg)](https://pypi.org/project/pythonista-stubs/)
-[![GitHub issues](https://img.shields.io/github/issues-raw/hbmartin/pythonista-stubs.svg)](https://github.com/hbmartin/pythonista-stubs/issues)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![Build Status](https://travis-ci.com/hbmartin/pythonista-stubs.svg?branch=master)](https://travis-ci.com/hbmartin/pythonista-stubs)
+[![CI](https://github.com/hbmartin/pythonista-stubs/actions/workflows/ci.yml/badge.svg)](https://github.com/hbmartin/pythonista-stubs/actions/workflows/ci.yml)
+
 
 
 Stubs for the [Pythonista iOS API](http://omz-software.com/pythonista/docs/ios/). This allows for better error detection and IDE / editor autocomplete.
@@ -11,48 +12,35 @@ Stubs for the [Pythonista iOS API](http://omz-software.com/pythonista/docs/ios/)
 ## Installation and Usage
 
 ```
-pip install pythonista-stubs --upgrade
+uv add pythonista-stubs
 ```
-N.b. you may need to `pip3`, particularly if you installed python3 with homebrew
-
-Type checking can then be performed with [mypy](https://mypy.readthedocs.io/en/latest/command_line.html)
-
-
-* [PyCharm](https://www.jetbrains.com/help/pycharm/type-hinting-in-product.html#stub): Works immediately
-* Vim: [vim-mypy](https://github.com/Integralist/vim-mypy)
-* Emacs: using [Flycheck](https://github.com/flycheck/) and [Flycheck-mypy](https://github.com/lbolla/emacs-flycheck-mypy)
-* Sublime Text: [SublimeLinter-contrib-mypy](https://github.com/fredcallaway/SublimeLinter-contrib-mypy)
-* Atom: [linter-mypy](https://atom.io/packages/linter-mypy)
-* VS Code: provides [basic integration](https://code.visualstudio.com/docs/python/linting#_mypy) with mypy.
-* flake8: [flake8-mypy](https://github.com/ambv/flake8-mypy)
-
-See also: [mypy integrations](https://github.com/python/mypy#ide--linter-integrations)
+You can now develop from your computer editor with proper typing and completions.
 
 ## API Coverage
 
 | Module      | Status |
 | ----------- |--------|
 | appex       | ✔      |
-| canvas      | ✘      |
-| cb          | ✘      |
+| canvas      | WIP   |
+| cb          | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/7) |
 | clipboard   | ✔      |
 | console     | ✔      |
-| dialogs     | ✘      |
-| contacts    | ✘      |
+| contacts | ✔     |
+| dialogs | ✔     |
 | editor      | ✔      |
-| keychain    | ✘      |
-| linguistictagger | ✘      |
-| location    | ✘      |
-| motion      | ✘      |
-| notification   | ✘      |
-| objc_util   | ✘      |
-| photos      | ✘      |
+| keychain    | ✔     |
+| linguistictagger | ✔     |
+| location    | ✔     |
+| motion      | ✔     |
+| notification   | ✔     |
+| objc_util   | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/7) |
+| photos      | ✔     |
 | reminders   | ✔      |
-| scene       | ✘      |
+| scene       | [✘](https://github.com/hbmartin/pythonista-stubs/issues/9) |
 | sound       | ✔      |
 | speech      | ✔      |
 | twitter     | ✘      |
-| ui          | ✘      |
+| ui          | [WIP](https://github.com/hbmartin/pythonista-stubs/issues/6) |
 
 ## Built With
 
@@ -68,15 +56,6 @@ See also: [mypy integrations](https://github.com/python/mypy#ide--linter-integra
 ## Contributing
 
 Please [file a bug report](https://github.com/hbmartin/pythonista-stubs/issues) for any issues you find. Even more excellent than a good bug report is a fix for a bug, or the implementation of a much-needed stub. We'd love to have your contributions.
-
-We use the usual GitHub pull-request flow, which may be familiar to
-you if you've contributed to other projects on GitHub.  For the
-mechanics, see [Mypy's git and GitHub workflow help page](https://github.com/python/mypy/wiki/Using-Git-And-GitHub),
-or [GitHub's own documentation](https://help.github.com/articles/using-pull-requests/).
-
-### Code Formatting
-
-This project is linted with [pyflakes](https://github.com/PyCQA/pyflakes) and makes strict use of [Black](https://github.com/ambv/black) for code formatting.
 
 ### Conventions
 
@@ -103,6 +82,7 @@ Everyone participating in this community is expected to treat other people with 
 ## Authors
 
 * [Harold Martin](https://www.linkedin.com/in/harold-martin-98526971/) - harold.martin at gmail
+* [Dmytro Yaroshenko](https://github.com/o-murphy)
 
 
 ## Disclaimer

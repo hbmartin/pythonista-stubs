@@ -1,23 +1,24 @@
-"""
-This is a stub file for the `location` module, providing type hints for its
+"""This is a stub file for the `location` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
-from typing import Dict, List, Optional, Literal
+from typing import Literal, TypeAlias
 
 # These are imported from the `ui` module, which is part of Pythonista.
-class Image: ...
+from .ui import Image
 
 # -----------------------------------------------------------------------------
 # Functions
 # -----------------------------------------------------------------------------
-_MapType = Literal["standard", "satellite", "hybrid"]
+_MapType: TypeAlias = Literal["standard", "satellite", "hybrid"]
 
-def get_location() -> Optional[Dict[str, float]]:
+def get_location() -> dict[str, float] | None:
     """Return the most recently obtained location data.
+
     Returns:
         Optional[Dict[str, float]]: A dictionary with 'longitude', 'latitude',
         and 'timestamp' keys, or None.
+
     """
     ...
 
@@ -29,14 +30,17 @@ def stop_updates() -> None:
     """Stop updating location data."""
     ...
 
-def geocode(address: Dict[str, str]) -> List[Dict[str, float]]:
+def geocode(address: dict[str, str]) -> list[dict[str, float]]:
     """Convert an address dictionary to geo-coordinates.
+
     Args:
         address (Dict[str, str]): A dictionary with address components (e.g.,
         'Street', 'City', 'Country').
+
     Returns:
         List[Dict[str, float]]: A list of dictionaries with 'longitude' and
         'latitude' keys.
+
     """
     ...
 
@@ -52,6 +56,7 @@ def render_map_snapshot(
     img_scale: int = 0,
 ) -> Image:
     """Render a snapshot image of the given map region.
+
     Args:
         lat (float): Latitude of the map's center.
         lng (float): Longitude of the map's center.
@@ -62,18 +67,23 @@ def render_map_snapshot(
         img_width (int, optional): Width of the returned image in points.
         img_height (int, optional): Height of the returned image in points.
         img_scale (int, optional): Scale factor of the image (0 for device scale).
+
     Returns:
         ui.Image: The rendered map snapshot.
+
     """
     ...
 
-def reverse_geocode(location: Dict[str, float]) -> List[Dict[str, str]]:
+def reverse_geocode(location: dict[str, float]) -> list[dict[str, str]]:
     """Convert geo-coordinates to a human-readable address.
+
     Args:
         location (Dict[str, float]): A dictionary with 'longitude' and
         'latitude' keys.
+
     Returns:
         List[Dict[str, str]]: A list of possible address dictionaries.
+
     """
     ...
 

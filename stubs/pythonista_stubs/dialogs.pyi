@@ -1,32 +1,31 @@
-"""
-This is a stub file for the `dialogs` module, providing type hints for its
+"""This is a stub file for the `dialogs` module, providing type hints for its
 functions and their parameters, to be used for static analysis and autocompletion.
 """
 
 import datetime
-from typing import Any, Dict, List, Optional, Sequence, Tuple, Union, Literal
+from collections.abc import Sequence
+from typing import Any, Literal, Protocol, TypeAlias, TypeVar
+
+from PIL.Image import Image as PILImage
 
 # These are imported from the `console` module for convenience.
 # We'll alias the types for clarity.
 from .console import _HudIcon
-
-# These are imported from the `ui` module, which is part of Pythonista.
-# We'll provide a minimal stub for the types used.
-class Image: ...
+from .ui import Image as UIImage
 
 class TextField:
     AUTOCAPITALIZE_SENTENCES: int = ...
     # ... other autocapitalization types
 
 class ListDataSource:
-    items: List[Dict[str, Any]] = ...
+    items: list[dict[str, Any]] = ...
 
 def alert(
     title: str,
     message: str = "",
     button1: str = "OK",
-    button2: Optional[str] = None,
-    button3: Optional[str] = None,
+    button2: str | None = None,
+    button3: str | None = None,
     hide_cancel_button: bool = False,
 ) -> int:
     """See console.alert()"""
@@ -58,7 +57,7 @@ def login_alert(
     login: str = "",
     password: str = "",
     ok_button_title: str = "OK",
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """See console.login_alert()"""
     ...
 
@@ -69,12 +68,16 @@ def hud_alert(message: str, icon: _HudIcon = "success", duration: float = 1.8) -
 # -----------------------------------------------------------------------------
 # Dialog Functions
 # -----------------------------------------------------------------------------
+class StrConvertible(Protocol):
+    def __str__(self) -> str: ...
+
+T = TypeVar('T', bound=StrConvertible)
 
 def list_dialog(
     title: str = "",
-    items: Optional[Union[Sequence[Any], List[Dict[str, Any]]]] = None,
+    items: list[T] | None = None,
     multiple: bool = False,
-) -> Optional[Union[Any, List[Any]]]:
+) -> list[T] | None:
     """Presents a list of items and returns the one(s) that were selected.
 
     When the dialog is cancelled, None is returned. The `items` list can
@@ -92,15 +95,16 @@ def list_dialog(
     Returns:
         Optional[Union[Any, List[Any]]]: The selected item(s), or None if the
             dialog was canceled.
+
     """
     ...
 
 def edit_list_dialog(
     title: str = "",
-    items: Optional[Sequence[Any]] = None,
+    items: Sequence[Any] | None = None,
     move: bool = True,
     delete: bool = True,
-) -> Optional[List[Any]]:
+) -> list[Any] | None:
     """Presents a list of items that can be edited by the user.
 
     By default, the user can both rearrange the list and remove items; this
@@ -118,11 +122,12 @@ def edit_list_dialog(
     Returns:
         Optional[List[Any]]: The modified list of items, or None if the
             dialog was cancelled.
+
     """
     ...
 
 # Field dictionaries are complex, so we'll type-hint them with a specific type alias.
-_FieldType = Literal[
+_FieldType: TypeAlias = Literal[
     "switch",
     "text",
     "url",
@@ -134,14 +139,14 @@ _FieldType = Literal[
     "date",
     "time",
 ]
-_FieldDict = Dict[str, Any]
-_SectionTuple = Tuple[str, List[_FieldDict], Optional[str]]
+_FieldDict: TypeAlias = dict[str, Any]
+_SectionTuple: TypeAlias = tuple[str, list[_FieldDict], str | None]
 
 def form_dialog(
     title: str = "",
-    fields: Optional[List[_FieldDict]] = None,
-    sections: Optional[List[_SectionTuple]] = None,
-) -> Optional[Dict[str, Any]]:
+    fields: list[_FieldDict] | None = None,
+    sections: list[_SectionTuple] | None = None,
+) -> dict[str, Any] | None:
     """Presents a form dialog with customizable data input fields.
 
     Args:
@@ -156,17 +161,18 @@ def form_dialog(
     Returns:
         Optional[Dict[str, Any]]: A dictionary of values for each field,
             or None if the dialog was cancelled.
+
     """
     ...
 
 def text_dialog(
     title: str = "",
     text: str = "",
-    font: Union[Tuple[str, int], Tuple[str], str] = ("<system>", 16),
-    autocorrection: Optional[bool] = None,
-    autocapitalization: int = TextField.AUTOCAPITALIZE_SENTENCES,
-    spellchecking: Optional[bool] = None,
-) -> Optional[str]:
+    font: tuple[str, int] | tuple[str] | str = ("<system>", 16),
+    autocorrection: bool | None = None,
+    autocapitalization: int = ...,
+    spellchecking: bool | None = None,
+) -> str | None:
     """Shows a multi-line text editor sheet.
 
     Args:
@@ -183,10 +189,11 @@ def text_dialog(
 
     Returns:
         Optional[str]: The edited text, or None if the dialog was cancelled.
+
     """
     ...
 
-def date_dialog(title: str = "") -> Optional[datetime.datetime]:
+def date_dialog(title: str = "") -> datetime.datetime | None:
     """Shows a date picker dialog.
 
     Args:
@@ -195,10 +202,11 @@ def date_dialog(title: str = "") -> Optional[datetime.datetime]:
     Returns:
         Optional[datetime.datetime]: A datetime.datetime object with the selected
             date, or None if the dialog was cancelled.
+
     """
     ...
 
-def time_dialog(title: str = "") -> Optional[datetime.datetime]:
+def time_dialog(title: str = "") -> datetime.datetime | None:
     """Shows a time picker dialog.
 
     Args:
@@ -207,10 +215,11 @@ def time_dialog(title: str = "") -> Optional[datetime.datetime]:
     Returns:
         Optional[datetime.datetime]: A datetime.datetime object with the selected
             time, or None if the dialog was cancelled.
+
     """
     ...
 
-def datetime_dialog(title: str = "") -> Optional[datetime.datetime]:
+def datetime_dialog(title: str = "") -> datetime.datetime | None:
     """Shows a date and time picker dialog.
 
     Args:
@@ -219,10 +228,11 @@ def datetime_dialog(title: str = "") -> Optional[datetime.datetime]:
     Returns:
         Optional[datetime.datetime]: A datetime.datetime object with the selected
             date and time, or None if the dialog was cancelled.
+
     """
     ...
 
-def duration_dialog(title: str = "") -> Optional[float]:
+def duration_dialog(title: str = "") -> float | None:
     """Shows a duration picker dialog (e.g. for a countdown timer).
 
     Args:
@@ -231,6 +241,7 @@ def duration_dialog(title: str = "") -> Optional[float]:
     Returns:
         Optional[float]: The selected duration in seconds, or None if the
             dialog was cancelled.
+
     """
     ...
 
@@ -238,11 +249,12 @@ def duration_dialog(title: str = "") -> Optional[float]:
 # Sharing Functions
 # -----------------------------------------------------------------------------
 
-def share_image(img: Union[Image, Any]) -> None:
+def share_image(img: UIImage | PILImage) -> None:
     """Shows the system sharing dialog for a given image.
 
     Args:
-        img (Union[ui.Image, PIL.Image.Image]): The image to share.
+        img (ui.Image | PIL.Image.Image): The image to share.
+
     """
     ...
 
@@ -251,6 +263,7 @@ def share_text(text: str) -> None:
 
     Args:
         text (str): The text to share.
+
     """
     ...
 
@@ -259,6 +272,7 @@ def share_url(url: str) -> None:
 
     Args:
         url (str): The URL to share.
+
     """
     ...
 
@@ -266,8 +280,8 @@ def share_url(url: str) -> None:
 # Importing Files
 # -----------------------------------------------------------------------------
 
-def pick_document(types: List[str] = ["public.data"]) -> Optional[str]:
-    """Shows the system’s document picker for importing a file.
+def pick_document(types: list[str] = ["public.data"]) -> str | None:
+    """Shows the system's document picker for importing a file.
 
     Args:
         types (List[str], optional): Universal Type Identifiers (UTIs) for
@@ -276,5 +290,6 @@ def pick_document(types: List[str] = ["public.data"]) -> Optional[str]:
     Returns:
         Optional[str]: The path to the selected temporary file, or None if
             the dialog was cancelled.
+
     """
     ...
