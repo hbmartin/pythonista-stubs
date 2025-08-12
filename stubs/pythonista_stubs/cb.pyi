@@ -48,6 +48,7 @@ __all__ = (
     "Characteristic",
     "Peripheral",
     "Service",
+    "SharedCentralManager",
     "cancel_peripheral_connection",
     "connect_peripheral",
     "get_state",
@@ -55,6 +56,7 @@ __all__ = (
     "scan_for_peripherals",
     "set_central_delegate",
     "set_verbose",
+    "shared_manager",
     "stop_scan",
 )
 
@@ -83,11 +85,11 @@ class _CentralManagerDelegate(Protocol):
 
 # Documented at https://github.com/hbmartin/pythonista-stubs/pull/11#issuecomment-3180673698
 class SharedCentralManager(CentralManager):
-    delegate: _CentralManagerDelegate | None = None
+    delegate: _CentralManagerDelegate | None
     verbose: bool = False
     def verbose_log(self) -> None: ...
 
-shared_manager: SharedCentralManager | None
+shared_manager: SharedCentralManager | None = None
 
 def set_central_delegate(delegate: _CentralManagerDelegate) -> None: ...
 def set_verbose(flag: bool) -> None: ...
